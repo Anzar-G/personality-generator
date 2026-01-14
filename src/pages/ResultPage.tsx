@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useParams, useSearchParams, Link } from 'react-router-dom';
 import { archetypes } from '../data/archetypes';
 import { getRandomQuote } from '../data/quotes';
@@ -15,7 +15,12 @@ export const ResultPage = () => {
     const [userData, setUserData] = useState<{ name: string; scores: Scores } | null>(null);
     const [quote, setQuote] = useState('');
 
-    const archetype = archetypes[archetypeId || 'silent-observer'];
+    // Use useMemo to make archetype reactive to archetypeId changes
+    const archetype = useMemo(() => {
+        if (!archetypeId) return undefined;
+        return archetypes[archetypeId];
+    }, [archetypeId]);
+
     // Default color if undefined
     const accentColor = archetype?.color || '#9d4edd';
 
@@ -57,8 +62,7 @@ export const ResultPage = () => {
 
         // Simulate analysis loading
         setTimeout(() => setLoading(false), 2000);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [archetypeId]); // Run once when archetypeId changes
+    }, [searchParams, archetype]); // Added archetype dependency
 
     const handleDownload = async () => {
         if (cardRef.current) {
@@ -113,7 +117,19 @@ export const ResultPage = () => {
         );
     }
 
-    if (!archetype || !userData) return <div className="text-white text-center pt-20">Archetype Tidak Ditemukan atau Data Invalid</div>;
+    // If archetypeId is missing or archetype not found, show error
+    if (!archetypeId || !archetype) {
+        return (
+            <div className="min-h-screen bg-background-dark flex items-center justify-center">
+                <div className="text-center">
+                    <p className="text-white text-xl mb-4">Archetype tidak ditemukan</p>
+                    <Link to="/" className="text-primary hover:underline">Kembali ke Quiz</Link>
+                </div>
+            </div>
+        );
+    }
+
+    if (!userData) return <div className="text-white text-center pt-20">Data Invalid - Silakan isi quiz lagi</div>;
 
     // Safe Accessors
     const scores = userData.scores || {};
