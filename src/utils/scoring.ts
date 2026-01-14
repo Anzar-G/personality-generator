@@ -54,56 +54,70 @@ export const determineArchetype = (scores: Scores): string => {
         fawn: ((tra.fawn || 0) / ((tra.fight || 0) + (tra.flight || 0) + (tra.freeze || 0) + (tra.fawn || 0) || 1)) * 100,
     };
 
-    // Calculate "Affinity Score" for each archetype
-    // We sum up the relevant traits. The one with the highest affinity wins.
+    // Calculate "Affinity Score" with WEIGHTING (Multiplier)
+    // Core traits get 2x weight, secondary get 1x.
+    // Penalties are negative.
     const archetypes = [
         {
             id: 'emotional-manipulator',
-            score: stats.darkTriad + stats.anxious + (stats.emoHealth < 40 ? 30 : 0)
+            // High Dark Triad AND Anxious.
+            score: (stats.darkTriad * 2) + (stats.anxious * 1.5) - stats.secure
         },
         {
             id: 'silent-observer',
-            score: stats.avoidant + stats.emoHealth + (stats.darkTriad < 50 ? 20 : 0)
+            // High Avoidant but Healthy-ish.
+            score: (stats.avoidant * 2) + Math.min(stats.emoHealth, 80) - stats.anxious
         },
         {
             id: 'integrated-self',
-            score: stats.secure + stats.emoHealth + (stats.darkTriad < 30 ? 40 : 0)
+            // High Secure AND Healthy.
+            score: (stats.secure * 2) + (stats.emoHealth * 1.5) - stats.darkTriad
         },
         {
             id: 'self-saboteur',
-            score: stats.anxious + Math.max(stats.fight, stats.fawn) + (stats.emoHealth < 40 ? 30 : 0)
+            // Anxious + Flight/Fawn + Low Health.
+            score: (stats.anxious * 1.5) + Math.max(stats.fight, stats.fawn) * 1.5 - stats.emoHealth
         },
         {
             id: 'stoic-protector',
-            score: stats.avoidant + Math.max(stats.flight, stats.freeze) + (stats.darkTriad < 60 && stats.darkTriad > 30 ? 30 : 0)
+            // Avoidant + Freeze/Flight + Moderate Dark Triad.
+            score: (stats.avoidant * 1.5) + Math.max(stats.flight, stats.freeze) * 1.5 + (stats.darkTriad > 40 ? 20 : 0)
         },
         {
             id: 'chaotic-empath',
-            score: stats.anxious + stats.fawn + (stats.secure < 30 ? 40 : 0)
+            // Anxious + Fawn.
+            score: (stats.anxious * 2) + (stats.fawn * 2) - stats.secure
         },
         {
             id: 'calculated-detacher',
-            score: stats.avoidant + stats.darkTriad + (stats.emoHealth < 50 ? 20 : 0)
+            // Avoidant + Dark Triad.
+            score: (stats.avoidant * 1.5) + (stats.darkTriad * 1.5) - stats.anxious
         },
         {
             id: 'overthinking-analyzer',
-            score: stats.anxious + stats.freeze + (stats.emoHealth > 40 ? 20 : 0)
+            // Anxious + Freeze + Intelligent (High Health usually correlates with self-awareness in this test context).
+            score: (stats.anxious * 1.5) + (stats.freeze * 2) + (stats.emoHealth * 0.5)
         },
         {
             id: 'numb-survivor',
-            score: Math.max(stats.freeze, stats.flight) + (stats.emoHealth < 30 ? 50 : 0)
+            // Freeze/Flight + Low Health.
+            score: Math.max(stats.freeze, stats.flight) * 2 - stats.emoHealth
         },
         {
             id: 'adaptive-chameleon',
-            score: stats.fawn + (stats.darkTriad > 30 ? 30 : 0) + (stats.secure < 40 ? 20 : 0)
+            // Fawn + Dark Triad (Manipulative fawning).
+            score: (stats.fawn * 2) + stats.darkTriad - stats.secure
         },
         {
             id: 'wounded-healer',
-            score: stats.secure + stats.emoHealth + (stats.darkTriad < 20 ? 30 : 0)
+            // Secure but with Trauma history (implied by lower current trauma scores but high empathy/health).
+            // Logic: High Secure + High Health, but NOT 'Integrated Self' (maybe lower Dark Triad).
+            score: (stats.secure * 1.5) + (stats.emoHealth * 1.5) + (stats.fawn * 0.5)
         },
         {
             id: 'shadow-worker',
-            score: stats.darkTriad + stats.emoHealth + (stats.secure > 30 ? 30 : 0)
+            // Active work. Balanced stats.
+            score: stats.darkTriad + stats.emoHealth + stats.secure
         }
     ];
 
