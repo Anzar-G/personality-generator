@@ -46,7 +46,7 @@ export const ResultPage = () => {
         const dataParam = searchParams.get('d');
         if (!dataParam) return null;
         try {
-            return JSON.parse(atob(dataParam)) as { name: string; scores: Scores };
+            return JSON.parse(atob(dataParam)) as { name: string; email: string; scores: Scores };
         } catch (e) {
             console.error("Failed to parse data", e);
             return null;
@@ -66,7 +66,12 @@ export const ResultPage = () => {
             const saveData = async () => {
                 const { error } = await supabase
                     .from('quiz_results')
-                    .insert([{ name: userData.name, archetype: archetype.name, scores: userData.scores }]);
+                    .insert([{
+                        name: userData.name,
+                        email: userData.email,
+                        archetype: archetype.name,
+                        scores: userData.scores
+                    }]);
                 if (error) console.error('Error saving result:', error);
             };
             saveData();
@@ -320,7 +325,7 @@ export const ResultPage = () => {
                             { label: 'The Light', color: 'text-emerald-400', content: archetype.strength },
                             { label: 'The Shadow', color: 'text-rose-400', content: archetype.weakness }
                         ].map((item, idx) => (
-                            <div key={idx} className="bg-white/[0.02] backdrop-blur-xl border border-white/5 p-10 rounded-[2rem] space-y-4 group hover:border-white/20 transition-all">
+                            <div key={idx} className="bg-white/[0.02] backdrop-blur-md border border-white/5 p-10 rounded-[2rem] space-y-4 group hover:border-white/20 transition-all">
                                 <span className={`font-mono text-[10px] uppercase tracking-widest font-bold ${item.color}`}>{item.label}</span>
                                 <p className="text-xl text-white/80 leading-relaxed font-light">{item.content}</p>
                             </div>

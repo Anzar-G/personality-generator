@@ -56,7 +56,7 @@ const DynamicBackground: React.FC<DynamicBackgroundProps> = ({ theme }) => {
                             repeat: Infinity,
                             ease: "linear"
                         }}
-                        className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full blur-[120px]"
+                        className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] rounded-full blur-[80px]"
                         style={{ background: current.mesh }}
                     />
 
@@ -72,8 +72,8 @@ const DynamicBackground: React.FC<DynamicBackgroundProps> = ({ theme }) => {
                             repeat: Infinity,
                             ease: "linear"
                         }}
-                        className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] rounded-full blur-[140px]"
-                        style={{ background: `rgba(${theme === 'light' ? '16, 185, 129' : '124, 58, 237'}, 0.1)` }}
+                        className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] rounded-full blur-[90px]"
+                        style={{ background: `rgba(${theme === 'light' ? '16, 185, 129' : '124, 58, 237'}, 0.08)` }}
                     />
 
                     {/* Ambient Glow */}
@@ -89,8 +89,8 @@ const DynamicBackground: React.FC<DynamicBackgroundProps> = ({ theme }) => {
             {/* Grain Overlay (moving from Layout to here for better integration) */}
             <div className="absolute inset-0 grain-overlay opacity-40 pointer-events-none"></div>
 
-            {/* Scanline Effect */}
-            <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03))] bg-[length:100%_4px,3px_100%]"></div>
+            {/* Simple Scanline Effect (Optimized) */}
+            <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.05)_50%)] bg-[length:100%_4px] opacity-20"></div>
         </div>
     );
 };

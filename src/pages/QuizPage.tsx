@@ -10,6 +10,7 @@ import { ChevronRight, ChevronLeft, Sparkles, AlertCircle } from 'lucide-react';
 
 const QuizPage: React.FC = () => {
     const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [step, setStep] = useState<'intro' | 'quiz' | 'finish'>('intro');
     const [currentIndex, setCurrentIndex] = useState(0);
     const [answers, setAnswers] = useState<Record<number, Scores>>({});
@@ -46,11 +47,11 @@ const QuizPage: React.FC = () => {
     };
 
     const handleGenerate = () => {
-        if (!name.trim()) return;
+        if (!name.trim() || !email.trim()) return;
 
         const totalScores = calculateScores(answers);
         const archetypeId = determineArchetype(totalScores);
-        const payload = { name, scores: totalScores };
+        const payload = { name, email, scores: totalScores };
         const encodedPayload = btoa(JSON.stringify(payload));
 
         navigate(`/result/${archetypeId}?d=${encodedPayload}`);
@@ -152,7 +153,7 @@ const QuizPage: React.FC = () => {
                                 key={currentIndex}
                                 initial={{ opacity: 0, scale: 0.98 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="bg-white/[0.03] backdrop-blur-2xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl"
+                                className="bg-white/[0.03] backdrop-blur-lg border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl"
                             >
                                 <div className="text-center mb-12 space-y-4">
                                     <span className="inline-block text-primary font-bold text-[10px] tracking-[0.4em] uppercase">Part {String(currentIndex + 1).padStart(2, '0')}</span>
@@ -205,9 +206,24 @@ const QuizPage: React.FC = () => {
                                 <p className="text-white/40 uppercase tracking-[0.5em] text-xs">Semua topeng telah dibuka.</p>
                             </div>
 
-                            <div className="max-w-md mx-auto space-y-4">
+                            <div className="max-w-md mx-auto space-y-6">
+                                <div className="space-y-4">
+                                    <div className="relative group">
+                                        <div className="absolute -inset-1 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-10 group-focus-within:opacity-30 transition duration-500"></div>
+                                        <input
+                                            type="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            className="relative w-full bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-2xl py-4 px-6 text-xl font-medium text-center focus:ring-2 ring-primary/50 outline-none transition-all placeholder:text-white/20"
+                                            placeholder="Ketik email lo buat dapet pdf-nya"
+                                        />
+                                    </div>
+                                    <p className="text-[10px] text-white/30 uppercase tracking-[0.2em]">Hasil bakal dikirim lewat email juga</p>
+                                </div>
+
                                 <Button
                                     onClick={handleGenerate}
+                                    disabled={!email.trim() || !email.includes('@')}
                                     className="text-xl py-8 rounded-[2rem] shadow-2xl shadow-primary/40 relative overflow-hidden group"
                                     fullWidth
                                 >
