@@ -1,19 +1,47 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useParams, useSearchParams, Link } from 'react-router-dom';
+import { motion, useMotionValue, useSpring, useTransform, AnimatePresence } from 'framer-motion';
 import { archetypes } from '../data/archetypes';
 import { getRandomQuote } from '../data/quotes';
 import type { Scores } from '../data/questions';
-import { Download, Share2, Zap, FileText } from 'lucide-react';
+import { Download, Share2, Zap, Database, Shield, Fingerprint, Brain } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { supabase } from '../supabaseClient';
+import Layout from '../layouts/Layout';
 
 export const ResultPage = () => {
     const { archetypeId } = useParams<{ archetypeId: string }>();
     const [searchParams] = useSearchParams();
     const [loading, setLoading] = useState(true);
+    const [analysisStep, setAnalysisStep] = useState(0);
     const cardRef = useRef<HTMLDivElement>(null);
 
-    // Parse user data from URL (useMemo to avoid re-parsing)
+    // 3D Tilt Logic
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+    const mouseXSpring = useSpring(x);
+    const mouseYSpring = useSpring(y);
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+        x.set(xPct);
+        y.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
+    // Parse user data from URL
     const userData = useMemo(() => {
         const dataParam = searchParams.get('d');
         if (!dataParam) return null;
@@ -25,54 +53,41 @@ export const ResultPage = () => {
         }
     }, [searchParams]);
 
-    // Get archetype (useMemo to make it reactive)
     const archetype = useMemo(() => {
         if (!archetypeId) return undefined;
         return archetypes[archetypeId];
     }, [archetypeId]);
 
     const accentColor = archetype?.color || '#9d4edd';
+    const quote = useMemo(() => (archetype ? getRandomQuote(archetype.id) : ''), [archetype]);
 
-    // Generate quote (useMemo to avoid re-generating)
-    const quote = useMemo(() => {
-        if (!archetype) return '';
-        return getRandomQuote(archetype.id);
-    }, [archetype]);
-
-    // Save to Supabase on mount
     useEffect(() => {
         if (userData && archetype) {
             const saveData = async () => {
                 const { error } = await supabase
                     .from('quiz_results')
-                    .insert([
-                        {
-                            name: userData.name,
-                            archetype: archetype.name,
-                            scores: userData.scores
-                        },
-                    ]);
+                    .insert([{ name: userData.name, archetype: archetype.name, scores: userData.scores }]);
                 if (error) console.error('Error saving result:', error);
             };
             saveData();
         }
 
-        // Simulate loading
+        // Cinematic Loading Sequence
+        const intervals = [800, 1600, 2400, 3200];
+        intervals.forEach((time, index) => {
+            setTimeout(() => setAnalysisStep(index + 1), time);
+        });
+
         const timer = setTimeout(() => {
             setLoading(false);
             window.scrollTo(0, 0);
-        }, 2000);
+        }, 4000);
         return () => clearTimeout(timer);
     }, [userData, archetype]);
 
     const handleDownload = async () => {
         if (cardRef.current) {
-            await new Promise(resolve => setTimeout(resolve, 100));
-            const canvas = await html2canvas(cardRef.current, {
-                backgroundColor: '#0a0a0a',
-                scale: 2,
-                useCORS: true
-            });
+            const canvas = await html2canvas(cardRef.current, { backgroundColor: '#0a0a0a', scale: 2, useCORS: true });
             const link = document.createElement('a');
             link.download = `paham-diam-${archetype?.id}.png`;
             link.href = canvas.toDataURL();
@@ -81,328 +96,270 @@ export const ResultPage = () => {
     };
 
     const handleShare = () => {
-        const url = window.location.href;
-        navigator.clipboard.writeText(url);
+        navigator.clipboard.writeText(window.location.href);
         alert('Link tersalin! Bagikan journey lo.');
     };
 
-    const handleJoinChallenge = async () => {
-        const emailInput = document.getElementById('email-input') as HTMLInputElement;
-        const email = emailInput?.value;
+    const analysisTexts = [
+        "Scanning neural pathways...",
+        "Identifying shadow patterns...",
+        "Measuring emotional resilience...",
+        "Generating psychological profile...",
+        "Analysis Complete."
+    ];
 
-        if (email && userData) {
-            const { error } = await supabase
-                .from('leads')
-                .upsert([
-                    { email: email, name: userData.name, archetype: archetype?.name }
-                ]);
-
-            if (!error) {
-                alert(`Mantap! Challenge dikirim ke ${email}.`);
-            } else {
-                console.error(error);
-                alert("Gagal save email. Cek koneksi Supabase lo dan pastikan tabel 'leads' ada.");
-            }
-        } else {
-            alert("Isi email dulu bos.");
-        }
-    };
-
-    // Loading state
     if (loading) {
         return (
-            <div className="min-h-screen bg-background-dark flex items-center justify-center flex-col gap-4" style={{ '--accent': accentColor } as React.CSSProperties}>
-                <div className="w-16 h-16 border-4 border-t-transparent rounded-full animate-spin border-[var(--accent)]"></div>
-                <p className="animate-pulse tracking-widest uppercase text-sm text-white/70">Menganalisis Jiwa...</p>
-            </div>
+            <Layout backgroundTheme="neutral">
+                <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-6">
+                    <div className="relative size-32 mb-12">
+                        <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                            className="absolute inset-0 border-2 border-dashed border-primary/30 rounded-full"
+                        />
+                        <motion.div
+                            animate={{ rotate: -360 }}
+                            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                            className="absolute inset-4 border border-indigo-500/20 rounded-full"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <Brain className="w-12 h-12 text-primary animate-pulse" />
+                        </div>
+                    </div>
+
+                    <div className="space-y-4 max-w-xs mx-auto">
+                        <AnimatePresence mode="wait">
+                            <motion.p
+                                key={analysisStep}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                className="font-mono text-xs tracking-[0.3em] uppercase text-white/40"
+                            >
+                                {analysisTexts[analysisStep]}
+                            </motion.p>
+                        </AnimatePresence>
+                        <div className="h-1 w-48 bg-white/5 rounded-full overflow-hidden mx-auto">
+                            <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${(analysisStep / 4) * 100}%` }}
+                                className="h-full bg-primary"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="mt-20 grid grid-cols-2 gap-x-12 gap-y-4 opacity-20 font-mono text-[8px] uppercase tracking-widest text-left">
+                        <div className="flex items-center gap-2"><Database className="size-3" /> Data Encrypted</div>
+                        <div className="flex items-center gap-2"><Shield className="size-3" /> Privacy Secured</div>
+                        <div className="flex items-center gap-2"><Fingerprint className="size-3" /> Biometric Sync</div>
+                        <div className="flex items-center gap-2"><Zap className="size-3" /> Neural Linked</div>
+                    </div>
+                </div>
+            </Layout>
         );
     }
 
-    // Error: Missing archetype
-    if (!archetypeId || !archetype) {
+    if (!archetype || !userData) {
         return (
-            <div className="min-h-screen bg-background-dark flex items-center justify-center">
-                <div className="text-center">
-                    <p className="text-white text-xl mb-4">Archetype tidak ditemukan</p>
-                    <p className="text-white/50 text-sm mb-6">ID: {archetypeId || 'undefined'}</p>
+            <Layout backgroundTheme="neutral">
+                <div className="text-center py-20">
+                    <p className="text-white text-xl mb-4">Data tidak valid</p>
                     <Link to="/" className="text-primary hover:underline">Kembali ke Quiz</Link>
                 </div>
-            </div>
+            </Layout>
         );
     }
 
-    // Error: Missing user data
-    if (!userData) {
-        return (
-            <div className="min-h-screen bg-background-dark flex items-center justify-center">
-                <div className="text-center">
-                    <p className="text-white text-xl mb-4">Data Invalid</p>
-                    <p className="text-white/50 text-sm mb-6">Silakan isi quiz lagi</p>
-                    <Link to="/" className="text-primary hover:underline">Kembali ke Quiz</Link>
-                </div>
-            </div>
-        );
-    }
-
-    // Safe Accessors
     const scores = userData.scores || {};
-
-    // Dynamic Stats based on Archetype Type
     const isLight = archetype.type === 'light';
-
     const primaryLabel = isLight ? 'Growth Potential' : 'Sisi Gelap';
     const secondaryLabel = isLight ? 'Emotional Intel' : 'Kesehatan Emosi';
-
     const primaryVal = isLight ? (scores.growth || 0) : (scores.darkTriad || 0);
     const secondaryVal = isLight ? (scores.emotionalIntelligence || 0) : (scores.emotionalHealth || 0);
-
-    // Normalize (max 15q * 6 = 90)
     const primaryPercent = Math.min(Math.round((primaryVal / 90) * 100), 100);
     const secondaryPercent = Math.min(Math.round((secondaryVal / 90) * 100), 100);
 
     const trauma = scores.trauma || { fight: 0, flight: 0, freeze: 0, fawn: 0 };
     const sortedTrauma = Object.entries(trauma).sort(([, a], [, b]) => (b || 0) - (a || 0));
-    const primaryTrauma = sortedTrauma[0] ? sortedTrauma[0][0] : 'None';
+    const primaryTrauma = sortedTrauma[0]?.[0] || 'None';
 
     const attachment = scores.attachment || { secure: 0, anxious: 0, avoidant: 0, fearfulAvoidant: 0 };
-    const attTotal = (attachment.secure || 0) + (attachment.anxious || 0) + (attachment.avoidant || 0) + (attachment.fearfulAvoidant || 0) || 1;
     const sortedAtt = Object.entries(attachment).sort(([, a], [, b]) => (b || 0) - (a || 0));
-    const domAtt = sortedAtt[0] ? sortedAtt[0][0] : 'Secure';
-    const domAttPct = Math.round(((sortedAtt[0]?.[1] || 0) / attTotal) * 100);
-
-    const containerStyle = { '--accent': accentColor } as React.CSSProperties;
+    const domAtt = sortedAtt[0]?.[0] || 'Secure';
 
     return (
-        <div style={containerStyle} className="font-display bg-background-light dark:bg-background-dark text-white min-h-screen relative selection:bg-white/20 selection:text-white overflow-x-hidden">
-            {/* Custom Header */}
-            <header className="flex items-center justify-between border-b border-white/10 px-6 py-4 lg:px-20 relative z-20">
-                <div className="flex items-center gap-3">
-                    <Zap className="w-6 h-6 text-[var(--accent)]" />
-                    <h2 className="text-lg font-bold tracking-tighter uppercase italic">@paham.diam</h2>
-                </div>
-                <div className="flex items-center gap-6">
-                    <nav className="hidden md:flex items-center gap-10">
-                        <button onClick={() => alert("Segera: Library 12 archetype lengkap.")} className="text-sm font-medium hover:text-white transition-colors uppercase tracking-widest bg-transparent border-none cursor-pointer text-white/60">Archetypes</button>
-                        <button onClick={() => alert("Segera: Metodologi di balik Paham Diam.")} className="text-sm font-medium hover:text-white transition-colors uppercase tracking-widest bg-transparent border-none cursor-pointer text-white/60">The Science</button>
-                    </nav>
-                    <Link to="/" className="text-white px-5 py-2 rounded-lg font-bold text-xs md:text-sm tracking-wide transition-all uppercase hover:scale-105 bg-[var(--accent)] shadow-[0_0_20px_rgba(0,0,0,0.3)] whitespace-nowrap">
-                        Tes Ulang
-                    </Link>
-                </div>
-            </header>
+        <Layout backgroundTheme={isLight ? 'light' : 'dark'}>
+            <motion.main
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col lg:flex-row items-center justify-center p-6 lg:p-20 gap-12 lg:gap-24 w-full"
+            >
+                {/* 3D TILT CARD */}
+                <div
+                    className="relative group perspective-2000"
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                >
+                    <motion.div
+                        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                        className="relative"
+                    >
+                        <div className="absolute -inset-4 rounded-[2.5rem] blur-3xl opacity-20 group-hover:opacity-40 transition duration-1000" style={{ background: accentColor }}></div>
 
-            <main className="flex-1 flex flex-col lg:flex-row items-center justify-center p-6 lg:p-20 gap-12 lg:gap-24 relative z-10 w-full max-w-7xl mx-auto">
-                {/* Personality Card Centerpiece */}
-                <div className="relative group perspective-1000">
-                    <div className="absolute -inset-1 rounded-xl blur-2xl opacity-50 group-hover:opacity-75 transition duration-1000 bg-[var(--accent)]"></div>
+                        {/* CARD CONTENT */}
+                        <div ref={cardRef} className="relative w-[340px] md:w-[380px] h-[640px] bg-gradient-to-br from-[#0c0c0c] to-[#000000] border border-white/10 rounded-[2rem] p-8 flex flex-col justify-between overflow-hidden shadow-2xl">
+                            {/* Inner Glows */}
+                            <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] opacity-20 -z-10" style={{ background: accentColor }}></div>
+                            <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[100px] opacity-10 -z-10" style={{ background: accentColor }}></div>
 
-                    {/* CARD CAPTURE TARGET */}
-                    <div ref={cardRef} className="relative w-[340px] md:w-[380px] h-[640px] bg-gradient-to-br from-[#121212] to-[#000000] border border-white/10 rounded-xl p-8 flex flex-col justify-between overflow-hidden shadow-2xl">
-
-                        {/* Dynamic Background Gradient */}
-                        <div className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[80px] opacity-20 -z-10 pointer-events-none bg-[var(--accent)]"></div>
-                        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-[80px] opacity-10 -z-10 pointer-events-none bg-[var(--accent)]"></div>
-
-                        {/* Card Top */}
-                        <div className="flex flex-col items-center z-10">
-                            <div className="mb-6 p-4 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
-                                <Zap className="w-10 h-10 text-[var(--accent)]" />
-                            </div>
-                            <p className="text-[10px] tracking-[0.4em] font-bold uppercase mb-3 text-white/50">Dossier Psikologis</p>
-                            <h1 className="text-3xl md:text-3xl font-bold text-center leading-[0.9] tracking-tighter uppercase italic mb-2 break-words max-w-full text-white drop-shadow-md">
-                                {archetype.name}
-                            </h1>
-                            <div className="h-0.5 w-12 rounded-full mb-3 bg-[var(--accent)]"></div>
-                            <p className="text-white/40 text-[10px] uppercase tracking-widest">Subjek: {userData.name}</p>
-                        </div>
-
-                        {/* Card Middle: Stats */}
-                        <div className="flex flex-col gap-6 z-10">
-                            {/* Primary Metric */}
-                            <div className="space-y-2">
-                                <div className="flex justify-between items-end">
-                                    <span className="text-[10px] uppercase tracking-widest text-white/60">{primaryLabel}</span>
-                                    <span className="font-bold text-lg leading-none text-[var(--accent)]">{primaryPercent}%</span>
+                            {/* Card Header */}
+                            <div className="flex flex-col items-center z-10 text-center">
+                                <div className="mb-6 p-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
+                                    <Zap className="w-8 h-8" style={{ color: accentColor }} />
                                 </div>
-                                <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className="h-full rounded-full bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]/50" style={{ width: `${primaryPercent}%` }}></div>
-                                </div>
+                                <p className="text-[10px] tracking-[0.4em] font-bold uppercase mb-3 text-white/40 font-mono">Psych-Profile // V2.0</p>
+                                <h1 className="text-3xl font-serif font-black italic uppercase tracking-tighter leading-none mb-2" style={{ color: 'white' }}>
+                                    {archetype.name}
+                                </h1>
+                                <div className="h-0.5 w-12 rounded-full mb-3" style={{ background: accentColor }}></div>
+                                <p className="text-white/30 text-[9px] uppercase tracking-[0.3em] font-mono">Subject: {userData.name.substring(0, 15)}</p>
                             </div>
 
-                            {/* Secondary Metric */}
-                            <div className="space-y-2">
-                                <div className="flex justify-between items-end">
-                                    <span className="text-[10px] uppercase tracking-widest text-white/60">{secondaryLabel}</span>
-                                    <span className="font-bold text-lg leading-none text-emerald-400">{secondaryPercent}%</span>
+                            {/* Card Stats */}
+                            <div className="flex flex-col gap-6 z-10">
+                                <div className="space-y-2">
+                                    <div className="flex justify-between items-end">
+                                        <span className="text-[9px] uppercase tracking-widest text-white/40 font-mono">{primaryLabel}</span>
+                                        <span className="font-bold text-lg leading-none" style={{ color: accentColor }}>{primaryPercent}%</span>
+                                    </div>
+                                    <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                        <motion.div initial={{ width: 0 }} animate={{ width: `${primaryPercent}%` }} transition={{ duration: 1.5, delay: 0.5 }} className="h-full rounded-full" style={{ background: accentColor }} />
+                                    </div>
                                 </div>
-                                <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className="h-full bg-emerald-500 rounded-full shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: `${secondaryPercent}%` }}></div>
-                                </div>
-                            </div>
 
-                            <div className="grid grid-cols-2 gap-3 mt-2">
-                                <div className="bg-white/5 p-3 rounded border border-white/5 backdrop-blur-md">
-                                    <p className="text-[8px] uppercase tracking-widest text-white/40 mb-1">Trauma Response</p>
-                                    <p className="text-xs font-bold uppercase text-white">{primaryTrauma}</p>
+                                <div className="space-y-2">
+                                    <div className="flex justify-between items-end">
+                                        <span className="text-[9px] uppercase tracking-widest text-white/40 font-mono">{secondaryLabel}</span>
+                                        <span className="font-bold text-lg leading-none text-emerald-400">{secondaryPercent}%</span>
+                                    </div>
+                                    <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                        <motion.div initial={{ width: 0 }} animate={{ width: `${secondaryPercent}%` }} transition={{ duration: 1.5, delay: 0.7 }} className="h-full bg-emerald-500 rounded-full" />
+                                    </div>
                                 </div>
-                                <div className="bg-white/5 p-3 rounded border border-white/5 backdrop-blur-md">
-                                    <p className="text-[8px] uppercase tracking-widest text-white/40 mb-1">Attachment</p>
-                                    <div className="flex justify-between items-center">
-                                        <p className="text-xs font-bold uppercase text-white">{domAtt}</p>
-                                        <span className="text-[10px] text-white/50">{domAttPct}%</span>
+
+                                <div className="grid grid-cols-2 gap-3 mt-2 font-mono">
+                                    <div className="bg-white/5 p-3 rounded-xl border border-white/5">
+                                        <p className="text-[7px] uppercase tracking-widest text-white/30 mb-1">Trauma-Resp</p>
+                                        <p className="text-[10px] font-bold uppercase text-white">{primaryTrauma}</p>
+                                    </div>
+                                    <div className="bg-white/5 p-3 rounded-xl border border-white/5">
+                                        <p className="text-[7px] uppercase tracking-widest text-white/30 mb-1">Attachment</p>
+                                        <p className="text-[10px] font-bold uppercase text-white">{domAtt}</p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Card Bottom */}
-                        <div className="space-y-6 z-10">
-                            <div className="relative">
-                                <span className="absolute -top-3 -left-2 text-4xl opacity-20 font-serif text-[var(--accent)]">"</span>
-                                <p className="text-md font-medium leading-snug italic text-white/90 relative z-10 pl-4">
-                                    {quote}
-                                </p>
-                            </div>
-                            <div className="pt-4 border-t border-white/5 flex justify-between items-center">
-                                <span className="text-[8px] uppercase tracking-[0.2em] text-white/30">Gene: {new Date().toLocaleDateString('id-ID')}</span>
-                                <span className="text-[8px] uppercase tracking-[0.2em] text-white/30 font-bold">@paham.diam</span>
+                            {/* Card Quote */}
+                            <div className="space-y-6 z-10">
+                                <div className="relative">
+                                    <span className="absolute -top-4 -left-2 text-5xl opacity-10 font-serif" style={{ color: accentColor }}>"</span>
+                                    <p className="text-[15px] font-medium leading-relaxed italic text-white/80 relative z-10 pl-4 font-serif">
+                                        {quote}
+                                    </p>
+                                </div>
+                                <div className="pt-4 border-t border-white/5 flex justify-between items-center font-mono opacity-20">
+                                    <span className="text-[7px] uppercase tracking-widest">{new Date().toLocaleDateString('id-ID')}</span>
+                                    <span className="text-[7px] uppercase tracking-widest">@paham.diam</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
 
-                {/* UI Controls Sidebar */}
+                {/* SIDEBAR TOOLS */}
                 <div className="max-w-md w-full flex flex-col gap-10">
-                    <div className="space-y-4">
-                        <h3 className="text-3xl font-bold tracking-tighter uppercase italic text-[var(--accent)]">Identitas Bayangan Lo.</h3>
-                        <p className="text-white/70 leading-relaxed font-light text-md">
+                    <div className="space-y-6">
+                        <div className="inline-flex px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold uppercase tracking-[0.3em] text-primary">Analysis Result</div>
+                        <h3 className="text-4xl md:text-5xl font-serif font-black tracking-tighter uppercase italic leading-[0.8]" style={{ color: accentColor }}>Identitas<br />Bayangan Lo.</h3>
+                        <p className="text-white/60 leading-relaxed font-light text-lg">
                             {archetype?.description}
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <button onClick={handleDownload} className="flex items-center justify-center gap-2 text-white px-6 py-4 rounded-lg font-bold uppercase tracking-wider hover:brightness-110 transition-all shadow-lg bg-[var(--accent)]">
-                            <Download className="w-5 h-5" />
-                            <span>Simpan Kartu</span>
+                        <button onClick={handleDownload} className="group flex items-center justify-center gap-3 text-white px-8 py-5 rounded-2xl font-bold uppercase tracking-widest transition-all shadow-2xl relative overflow-hidden" style={{ background: accentColor }}>
+                            <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform" />
+                            <Download className="w-5 h-5 relative z-10" />
+                            <span className="relative z-10">Unduh Kartu</span>
                         </button>
-                        <button onClick={handleShare} className="flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white px-6 py-4 rounded-lg font-bold uppercase tracking-wider hover:bg-white/10 transition-all">
+                        <button onClick={handleShare} className="flex items-center justify-center gap-3 bg-white/5 border border-white/10 text-white px-8 py-5 rounded-2xl font-bold uppercase tracking-widest hover:bg-white/10 transition-all">
                             <Share2 className="w-5 h-5" />
                             <span>Share Link</span>
                         </button>
                     </div>
-
-                    {/* Email Capture */}
-                    <div className="bg-card-dark p-8 rounded-xl border border-white/5 space-y-6 relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
-                        <div className="absolute top-0 right-0 p-4 opacity-10">
-                            <FileText className="w-16 h-16" />
-                        </div>
-                        <div>
-                            <h4 className="text-lg font-bold uppercase tracking-tight mb-2 text-white">Tantangan Paham Diri</h4>
-                            <p className="text-sm text-white/50">Mau analisis lebih dalem soal tipe <span className="text-[var(--accent)]">{archetype?.name}</span>? Dapatkan email series 7 hari khusus buat lo.</p>
-                        </div>
-                        <div className="flex flex-col gap-3">
-                            <input
-                                className="bg-black/50 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-1 transition-all font-display placeholder:text-white/20 focus:ring-[var(--accent)] focus:border-[var(--accent)]"
-                                placeholder="email@lo.com"
-                                type="email"
-                                id="email-input"
-                            />
-                            <button
-                                onClick={handleJoinChallenge}
-                                className="w-full bg-white/5 border border-white/10 text-white/80 py-3 rounded-lg font-bold uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all"
-                            >
-                                Join Challenge
-                            </button>
-                        </div>
-                        <p className="text-[10px] text-center text-white/30 uppercase tracking-widest">No spam. Just hard truths.</p>
-                    </div>
                 </div>
-            </main>
+            </motion.main>
 
-            {/* Detailed Deep Dive Section */}
-            <section className="w-full bg-white/[0.02] border-t border-white/5 py-20 px-6 lg:px-20 relative z-10">
-                <div className="max-w-4xl mx-auto space-y-20">
-
-                    {/* Who You Are */}
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-4">
-                            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/10"></div>
-                            <h3 className="text-sm font-black uppercase tracking-[0.3em] text-[var(--accent)]">Who You Are</h3>
-                            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/10"></div>
+            <section className="w-full bg-white/[0.01] border-t border-white/5 py-32 px-6">
+                <div className="max-w-4xl mx-auto space-y-32">
+                    {/* Detailed Section */}
+                    <div className="space-y-12 text-center">
+                        <div className="flex items-center gap-8 justify-center">
+                            <div className="h-px w-12 bg-white/10" />
+                            <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-primary font-bold">Comprehensive Dossier</span>
+                            <div className="h-px w-12 bg-white/10" />
                         </div>
-                        <p className="text-xl md:text-2xl font-light leading-relaxed text-white/90 text-center italic">
+                        <h2 className="text-4xl md:text-6xl font-serif font-black italic tracking-tighter leading-tight px-4 capitalize">
                             {archetype.detailedDescription}
+                        </h2>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {[
+                            { label: 'The Light', color: 'text-emerald-400', content: archetype.strength },
+                            { label: 'The Shadow', color: 'text-rose-400', content: archetype.weakness }
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-white/[0.02] backdrop-blur-xl border border-white/5 p-10 rounded-[2rem] space-y-4 group hover:border-white/20 transition-all">
+                                <span className={`font-mono text-[10px] uppercase tracking-widest font-bold ${item.color}`}>{item.label}</span>
+                                <p className="text-xl text-white/80 leading-relaxed font-light">{item.content}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="bg-white/[0.02] border border-white/5 rounded-[3rem] overflow-hidden">
+                        <div className="grid grid-cols-1 lg:grid-cols-2">
+                            <div className="p-12 border-b lg:border-b-0 lg:border-r border-white/5 space-y-6">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold">Daily Dynamics</span>
+                                <p className="text-2xl text-white/90 leading-tight font-serif italic">{archetype.dailyBehavior}</p>
+                            </div>
+                            <div className="p-12 space-y-6">
+                                <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold">Relational Core</span>
+                                <p className="text-2xl text-white/90 leading-tight font-serif italic">{archetype.relationshipPattern}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="relative p-12 md:p-20 rounded-[3rem] overflow-hidden text-center group">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/5 to-transparent -z-10" />
+                        <div className="absolute inset-0 border border-primary/20 rounded-[3rem] -z-10" />
+                        <Zap className="w-16 h-16 mx-auto mb-10 text-primary opacity-50 group-hover:scale-110 transition-transform duration-500" />
+                        <h4 className="font-mono text-[10px] uppercase tracking-[0.5em] text-primary font-bold mb-8">The Hard Truth</h4>
+                        <p className="text-3xl md:text-5xl font-serif font-black italic tracking-tighter text-white leading-tight">
+                            {archetype.healingTip}
                         </p>
                     </div>
 
-                    {/* Traits Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="bg-white/[0.03] border border-white/5 p-8 rounded-2xl space-y-4 hover:bg-white/[0.05] transition-all">
-                            <h4 className="text-emerald-400 font-bold uppercase tracking-widest text-xs">The Light (Strength)</h4>
-                            <p className="text-white/80 leading-relaxed font-medium text-lg">
-                                {archetype.strength}
-                            </p>
-                        </div>
-                        <div className="bg-white/[0.03] border border-white/5 p-8 rounded-2xl space-y-4 hover:bg-white/[0.05] transition-all">
-                            <h4 className="text-rose-400 font-bold uppercase tracking-widest text-xs">The Shadow (Weakness)</h4>
-                            <p className="text-white/80 leading-relaxed font-medium text-lg">
-                                {archetype.weakness}
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Behavioral Insights */}
-                    <div className="bg-white/[0.01] border border-white/5 rounded-3xl overflow-hidden">
-                        <div className="grid grid-cols-1 lg:grid-cols-2">
-                            <div className="p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-white/5 space-y-4">
-                                <h4 className="text-white/40 font-bold uppercase tracking-[0.2em] text-[10px]">Behavior Harian</h4>
-                                <p className="text-xl text-white/90 leading-relaxed">
-                                    {archetype.dailyBehavior}
-                                </p>
-                            </div>
-                            <div className="p-8 lg:p-12 space-y-4">
-                                <h4 className="text-white/40 font-bold uppercase tracking-[0.2em] text-[10px]">Pattern Relasi</h4>
-                                <p className="text-xl text-white/90 leading-relaxed">
-                                    {archetype.relationshipPattern}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* The Hard Truth / Healing Tip */}
-                    <div className="bg-gradient-to-br from-[var(--accent)]/20 to-transparent border border-[var(--accent)]/20 p-8 md:p-12 rounded-3xl relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
-                            <Zap className="w-32 h-32 text-[var(--accent)]" />
-                        </div>
-                        <div className="relative z-10 space-y-6">
-                            <h4 className="text-[var(--accent)] font-black uppercase tracking-[0.2em] text-sm">The Hard Truth / Healing Tip</h4>
-                            <p className="text-2xl md:text-3xl font-bold text-white leading-tight">
-                                {archetype.healingTip}
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Footer Insight */}
-                    <div className="text-center pt-10 pb-6 border-b border-white/5">
-                        <p className="text-white/30 text-[10px] md:text-xs uppercase tracking-[0.5em] leading-loose px-4">Tanggapi dengan bijak. Identitas ini bukan vonis, melainkan cermin.</p>
-                    </div>
-
-                    {/* Final Retry CTA */}
-                    <div className="flex flex-col items-center gap-8 pt-16 pb-20">
-                        <Link to="/" className="group relative px-10 py-4 bg-white/5 border border-white/10 rounded-full overflow-hidden transition-all hover:bg-white/10 hover:border-white/20">
-                            <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/0 via-[var(--accent)]/10 to-[var(--accent)]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-                            <span className="relative text-sm font-bold uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">Ulangi Perjalanan Lo</span>
+                    <div className="flex flex-col items-center gap-12 pt-20">
+                        <Link to="/" className="group relative px-12 py-5 bg-white/5 border border-white/10 rounded-full overflow-hidden transition-all hover:bg-white/10 active:scale-95">
+                            <div className="absolute inset-x-0 bottom-0 h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-center" />
+                            <span className="relative text-xs font-bold uppercase tracking-[0.4em] text-white/60 group-hover:text-white transition-colors">Ulangi Perjalanan Lo</span>
                         </Link>
-                        <p className="text-white/20 text-[10px] uppercase tracking-[0.3em] font-light">Paham Diam Labs • Versi 2.0</p>
+                        <p className="text-white/10 font-mono text-[9px] uppercase tracking-[0.5em]">Paham Diam Labs // Psy-Unit 12-B</p>
                     </div>
                 </div>
             </section>
-
-            {/* Background Decorative Elements */}
-            <div className="fixed top-1/4 -left-20 w-80 h-80 rounded-full blur-[120px] -z-10 opacity-30 bg-[var(--accent)]"></div>
-            <div className="fixed bottom-1/4 -right-20 w-96 h-96 bg-primary/20 rounded-full blur-[140px] -z-10 opacity-20"></div>
-        </div>
+        </Layout>
     );
 };
 
