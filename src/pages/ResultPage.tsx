@@ -1,31 +1,53 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams, Link, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, Link } from 'react-router-dom';
 import { archetypes } from '../data/archetypes';
 import { getRandomQuote } from '../data/quotes';
-import type { Scores } from '../data/questions';
-import { Download, Share, Zap, FileText } from 'lucide-react';
+import type { Scores } from '../data/questions'; // Type-only import
+import { Download, Share2, Zap, FileText } from 'lucide-react';
 import html2canvas from 'html2canvas';
+import { supabase } from '../supabaseClient';
 
-const ResultPage: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+export const ResultPage = () => {
+    const { archetypeId } = useParams<{ archetypeId: string }>();
     const [searchParams] = useSearchParams();
     const [loading, setLoading] = useState(true);
-    const [userData, setUserData] = useState<{ name: string; scores: Scores } | null>(null);
     const cardRef = useRef<HTMLDivElement>(null);
+    const [userData, setUserData] = useState<{ name: string; scores: Scores } | null>(null);
     const [quote, setQuote] = useState('');
 
-    const archetype = archetypes[id || 'silent-observer'];
+    const archetype = archetypes[archetypeId || 'silent-observer'];
     // Default color if undefined
     const accentColor = archetype?.color || '#9d4edd';
 
+    // 1. Initial Load: Parse Data & Save to Supabase
     useEffect(() => {
-        const data = searchParams.get('d');
-        if (data) {
+        const dataParam = searchParams.get('data');
+        if (dataParam) {
             try {
-                const parsed = JSON.parse(atob(data));
+                const parsed = JSON.parse(atob(dataParam));
                 setUserData(parsed);
+
+                // Save to Supabase (only if parsed successfully)
+                const saveData = async () => {
+                    if (!parsed.scores) return;
+                    const { error } = await supabase
+                        .from('quiz_results')
+                        .insert([
+                            {
+                                name: parsed.name,
+                                archetype: archetype?.name || 'Unknown',
+                                scores: parsed.scores
+                            },
+                        ]);
+
+                    if (error) {
+                        console.error('Error saving result:', error);
+                    }
+                };
+                saveData();
+
             } catch (e) {
-                console.error("Failed to parse result data", e);
+                console.error("Failed to parse data", e);
             }
         }
 
@@ -36,7 +58,7 @@ const ResultPage: React.FC = () => {
         // Simulate analysis loading
         setTimeout(() => setLoading(false), 2000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [archetypeId]); // Run once when archetypeId changes
 
     const handleDownload = async () => {
         if (cardRef.current) {
@@ -48,7 +70,7 @@ const ResultPage: React.FC = () => {
                 useCORS: true
             });
             const link = document.createElement('a');
-            link.download = `paham-diam-${archetype.id}.png`;
+            link.download = `paham-diam-${archetype?.id}.png`;
             link.href = canvas.toDataURL();
             link.click();
         }
@@ -58,6 +80,28 @@ const ResultPage: React.FC = () => {
         const url = window.location.href;
         navigator.clipboard.writeText(url);
         alert('Link tersalin! Sebarkan kegelapan lo.');
+    };
+
+    const handleJoinChallenge = async () => {
+        const emailInput = document.getElementById('email-input') as HTMLInputElement;
+        const email = emailInput?.value;
+
+        if (email && userData) {
+            const { error } = await supabase
+                .from('leads') // Asumsi ada tabel 'leads'
+                .upsert([
+                    { email: email, name: userData.name, archetype: archetype?.name }
+                ]);
+
+            if (!error) {
+                alert(`Mantap! Challenge dikirim ke ${email}.`);
+            } else {
+                console.error(error);
+                alert("Gagal save email. Cek koneksi Supabase lo dan pastikan tabel 'leads' ada.");
+            }
+        } else {
+            alert("Isi email dulu bos.");
+        }
     };
 
     if (loading) {
@@ -76,15 +120,14 @@ const ResultPage: React.FC = () => {
     const darkTriadVal = scores.darkTriad || 0;
     const ehVal = scores.emotionalHealth || 0;
 
-    // Normalize to 0-100 based on max 90 (15 questions * 6 max score score)
+    // Normalize to 0-100 based on max 90 (15 questions * 6 max score)
     const darkTriadPercent = Math.min(Math.round((darkTriadVal / 90) * 100), 100);
     const emoHealthPercent = Math.min(Math.round((ehVal / 90) * 100), 100);
 
     const trauma = scores.trauma || { fight: 0, flight: 0, freeze: 0, fawn: 0 };
-    // Sort trauma entries to find Top 1 (Primary) and Top 2 (Secondary)
+    // Sort trauma entries to find Top 1 (Primary)
     const sortedTrauma = Object.entries(trauma).sort(([, a], [, b]) => (b || 0) - (a || 0));
     const primaryTrauma = sortedTrauma[0] ? sortedTrauma[0][0] : 'None';
-    // const secondaryTrauma = sortedTrarama[1] ? sortedTrauma[1][0] : 'None';
 
     const attachment = scores.attachment || { secure: 0, anxious: 0, avoidant: 0, fearfulAvoidant: 0 };
     const attTotal = (attachment.secure || 0) + (attachment.anxious || 0) + (attachment.avoidant || 0) + (attachment.fearfulAvoidant || 0) || 1;
@@ -197,7 +240,7 @@ const ResultPage: React.FC = () => {
                     <div className="space-y-4">
                         <h3 className="text-3xl font-bold tracking-tighter uppercase italic text-[var(--accent)]">Identitas Bayangan Lo.</h3>
                         <p className="text-white/70 leading-relaxed font-light text-md">
-                            {archetype.description}
+                            {archetype?.description}
                         </p>
                     </div>
 
@@ -207,7 +250,7 @@ const ResultPage: React.FC = () => {
                             <span>Simpan Kartu</span>
                         </button>
                         <button onClick={handleShare} className="flex items-center justify-center gap-2 bg-white/5 border border-white/10 text-white px-6 py-4 rounded-lg font-bold uppercase tracking-wider hover:bg-white/10 transition-all">
-                            <Share className="w-5 h-5" />
+                            <Share2 className="w-5 h-5" />
                             <span>Share Link</span>
                         </button>
                     </div>
@@ -220,7 +263,7 @@ const ResultPage: React.FC = () => {
                         </div>
                         <div>
                             <h4 className="text-lg font-bold uppercase tracking-tight mb-2 text-white">Tantangan Paham Diri</h4>
-                            <p className="text-sm text-white/50">Mau analisis lebih dalem soal tipe <span className="text-[var(--accent)]">{archetype.name}</span>? Dapatkan email series 7 hari khusus buat lo.</p>
+                            <p className="text-sm text-white/50">Mau analisis lebih dalem soal tipe <span className="text-[var(--accent)]">{archetype?.name}</span>? Dapatkan email series 7 hari khusus buat lo.</p>
                         </div>
                         <div className="flex flex-col gap-3">
                             <input
@@ -230,14 +273,7 @@ const ResultPage: React.FC = () => {
                                 id="email-input"
                             />
                             <button
-                                onClick={() => {
-                                    const email = (document.getElementById('email-input') as HTMLInputElement).value;
-                                    if (email) {
-                                        alert(`Mantap! Challenge 7 hari akan dikirim ke ${email}. (Simulasi: Backend belum connect)`);
-                                    } else {
-                                        alert("Isi email dulu dong, biar validasinya nyampe.");
-                                    }
-                                }}
+                                onClick={handleJoinChallenge}
                                 className="w-full bg-white/5 border border-white/10 text-white/80 py-3 rounded-lg font-bold uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all"
                             >
                                 Join Challenge
