@@ -180,13 +180,15 @@ export const ResultPage = () => {
                     <Zap className="w-6 h-6 text-[var(--accent)]" />
                     <h2 className="text-lg font-bold tracking-tighter uppercase italic">@paham.diam</h2>
                 </div>
-                <nav className="hidden md:flex items-center gap-10">
-                    <button onClick={() => alert("Segera: Library 12 archetype lengkap.")} className="text-sm font-medium hover:text-white transition-colors uppercase tracking-widest bg-transparent border-none cursor-pointer text-white/60">Archetypes</button>
-                    <button onClick={() => alert("Segera: Metodologi di balik Paham Diam.")} className="text-sm font-medium hover:text-white transition-colors uppercase tracking-widest bg-transparent border-none cursor-pointer text-white/60">The Science</button>
-                    <Link to="/" className="text-white px-6 py-2 rounded-lg font-bold text-sm tracking-wide transition-all uppercase hover:scale-105 bg-[var(--accent)]">
+                <div className="flex items-center gap-6">
+                    <nav className="hidden md:flex items-center gap-10">
+                        <button onClick={() => alert("Segera: Library 12 archetype lengkap.")} className="text-sm font-medium hover:text-white transition-colors uppercase tracking-widest bg-transparent border-none cursor-pointer text-white/60">Archetypes</button>
+                        <button onClick={() => alert("Segera: Metodologi di balik Paham Diam.")} className="text-sm font-medium hover:text-white transition-colors uppercase tracking-widest bg-transparent border-none cursor-pointer text-white/60">The Science</button>
+                    </nav>
+                    <Link to="/" className="text-white px-5 py-2 rounded-lg font-bold text-xs md:text-sm tracking-wide transition-all uppercase hover:scale-105 bg-[var(--accent)] shadow-[0_0_20px_rgba(0,0,0,0.3)] whitespace-nowrap">
                         Tes Ulang
                     </Link>
-                </nav>
+                </div>
             </header>
 
             <main className="flex-1 flex flex-col lg:flex-row items-center justify-center p-6 lg:p-20 gap-12 lg:gap-24 relative z-10 w-full max-w-7xl mx-auto">
@@ -382,8 +384,17 @@ export const ResultPage = () => {
                     </div>
 
                     {/* Footer Insight */}
-                    <div className="text-center pt-10">
-                        <p className="text-white/30 text-xs uppercase tracking-[0.5em]">Tanggapi dengan bijak. Identitas ini bukan vonis, melainkan cermin.</p>
+                    <div className="text-center pt-10 pb-6 border-b border-white/5">
+                        <p className="text-white/30 text-[10px] md:text-xs uppercase tracking-[0.5em] leading-loose px-4">Tanggapi dengan bijak. Identitas ini bukan vonis, melainkan cermin.</p>
+                    </div>
+
+                    {/* Final Retry CTA */}
+                    <div className="flex flex-col items-center gap-8 pt-16 pb-20">
+                        <Link to="/" className="group relative px-10 py-4 bg-white/5 border border-white/10 rounded-full overflow-hidden transition-all hover:bg-white/10 hover:border-white/20">
+                            <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/0 via-[var(--accent)]/10 to-[var(--accent)]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                            <span className="relative text-sm font-bold uppercase tracking-[0.2em] text-white/80 group-hover:text-white transition-colors">Ulangi Perjalanan Lo</span>
+                        </Link>
+                        <p className="text-white/20 text-[10px] uppercase tracking-[0.3em] font-light">Paham Diam Labs • Versi 2.0</p>
                     </div>
                 </div>
             </section>
