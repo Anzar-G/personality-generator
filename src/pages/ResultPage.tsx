@@ -21,7 +21,7 @@ export const ResultPage = () => {
 
     // 1. Initial Load: Parse Data & Save to Supabase
     useEffect(() => {
-        const dataParam = searchParams.get('data');
+        const dataParam = searchParams.get('d');
         if (dataParam) {
             try {
                 const parsed = JSON.parse(atob(dataParam));
