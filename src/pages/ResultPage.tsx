@@ -58,7 +58,10 @@ export const ResultPage = () => {
         }
 
         // Simulate loading
-        const timer = setTimeout(() => setLoading(false), 2000);
+        const timer = setTimeout(() => {
+            setLoading(false);
+            window.scrollTo(0, 0);
+        }, 2000);
         return () => clearTimeout(timer);
     }, [userData, archetype]);
 
