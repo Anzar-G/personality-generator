@@ -65,7 +65,7 @@ export const ResultPage = () => {
         if (userData && archetype) {
             const saveData = async () => {
                 const { error } = await supabase
-                    .from('quiz_results')
+                    .from('leads')
                     .insert([{
                         name: userData.name,
                         email: userData.email,
