@@ -54,78 +54,110 @@ export const determineArchetype = (scores: Scores): string => {
         fawn: ((tra.fawn || 0) / ((tra.fight || 0) + (tra.flight || 0) + (tra.freeze || 0) + (tra.fawn || 0) || 1)) * 100,
     };
 
-    // Calculate "Affinity Score" with WEIGHTING (Multiplier)
-    // Core traits get 2x weight, secondary get 1x.
-    // Penalties are negative.
+    // === PRIORITY SYSTEM ===
+    // Filter candidates based on dominant traits to prevent "Safe" results for "Dark" users.
+
+    let allowedArchetypes: string[] = [];
+
+    // TIER 1: HIGH DARK TRIAD (> 65%)
+    // If user is toxic, force them into a toxic archetype.
+    if (stats.darkTriad > 65) {
+        allowedArchetypes = [
+            'emotional-manipulator',
+            'calculated-detacher',
+            'adaptive-chameleon', // Often high Machiavellianism
+            'stoic-protector' // Can be dark if defense mechanisms are extreme
+        ];
+    }
+    // TIER 2: HIGH TRAUMA / LOW HEALTH (< 40%)
+    // If user is clearly struggling, don't give them "Integrated Self".
+    else if (stats.emoHealth < 40) {
+        allowedArchetypes = [
+            'self-saboteur',
+            'chaotic-empath',
+            'numb-survivor',
+            'overthinking-analyzer',
+            'emotional-manipulator' // Low health sometimes manifests as manipulation (survival)
+        ];
+    }
+    // TIER 3: BALANCED / GENERAL
+    else {
+        // Allow all archetypes if stats are moderate
+        allowedArchetypes = [
+            'emotional-manipulator', 'silent-observer', 'integrated-self', 'self-saboteur',
+            'stoic-protector', 'chaotic-empath', 'calculated-detacher', 'overthinking-analyzer',
+            'numb-survivor', 'adaptive-chameleon', 'wounded-healer', 'shadow-worker'
+        ];
+    }
+
+    // === SCORING LOGIC ===
     const archetypes = [
         {
             id: 'emotional-manipulator',
-            // High Dark Triad AND Anxious.
             score: (stats.darkTriad * 2) + (stats.anxious * 1.5) - stats.secure
         },
         {
             id: 'silent-observer',
-            // High Avoidant but Healthy-ish.
             score: (stats.avoidant * 2) + Math.min(stats.emoHealth, 80) - stats.anxious
         },
         {
             id: 'integrated-self',
-            // High Secure AND Healthy.
             score: (stats.secure * 2) + (stats.emoHealth * 1.5) - stats.darkTriad
         },
         {
             id: 'self-saboteur',
-            // Anxious + Flight/Fawn + Low Health.
             score: (stats.anxious * 1.5) + Math.max(stats.fight, stats.fawn) * 1.5 - stats.emoHealth
         },
         {
             id: 'stoic-protector',
-            // Avoidant + Freeze/Flight + Moderate Dark Triad.
-            score: (stats.avoidant * 1.5) + Math.max(stats.flight, stats.freeze) * 1.5 + (stats.darkTriad > 40 ? 20 : 0)
+            score: (stats.avoidant * 1.5) + Math.max(stats.flight, stats.freeze) * 1.5
         },
         {
             id: 'chaotic-empath',
-            // Anxious + Fawn.
             score: (stats.anxious * 2) + (stats.fawn * 2) - stats.secure
         },
         {
             id: 'calculated-detacher',
-            // Avoidant + Dark Triad.
             score: (stats.avoidant * 1.5) + (stats.darkTriad * 1.5) - stats.anxious
         },
         {
             id: 'overthinking-analyzer',
-            // Anxious + Freeze + Intelligent (High Health usually correlates with self-awareness in this test context).
             score: (stats.anxious * 1.5) + (stats.freeze * 2) + (stats.emoHealth * 0.5)
         },
         {
             id: 'numb-survivor',
-            // Freeze/Flight + Low Health.
             score: Math.max(stats.freeze, stats.flight) * 2 - stats.emoHealth
         },
         {
             id: 'adaptive-chameleon',
-            // Fawn + Dark Triad (Manipulative fawning).
             score: (stats.fawn * 2) + stats.darkTriad - stats.secure
         },
         {
             id: 'wounded-healer',
-            // Secure but with Trauma history (implied by lower current trauma scores but high empathy/health).
-            // Logic: High Secure + High Health, but NOT 'Integrated Self' (maybe lower Dark Triad).
             score: (stats.secure * 1.5) + (stats.emoHealth * 1.5) + (stats.fawn * 0.5)
         },
         {
             id: 'shadow-worker',
-            // Active work. Balanced stats.
             score: stats.darkTriad + stats.emoHealth + stats.secure
         }
     ];
 
-    // Sort by specific score descending
-    archetypes.sort((a, b) => b.score - a.score);
+    // Filter candidates based on Priority Tier
+    const candidates = archetypes.filter(arch => allowedArchetypes.includes(arch.id));
 
-    // Debugging (Visible in console if user inspects)
-    console.log("Archetype Matches:", archetypes.slice(0, 3));
+    // Sort valid candidates by score
+    candidates.sort((a, b) => b.score - a.score);
 
-    return archetypes[0].id;
+    // Fallback if filtering removed everyone (unlikely but safe)
+    if (candidates.length === 0) {
+        archetypes.sort((a, b) => b.score - a.score);
+        return archetypes[0].id;
+    }
+
+    // Debugging
+    console.log("Stats:", stats);
+    console.log("Tier allowed:", allowedArchetypes);
+    console.log("Winner:", candidates[0].id, candidates[0].score);
+
+    return candidates[0].id;
 };
