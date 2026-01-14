@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Layout from '../layouts/Layout';
 import Button from '../components/Button';
 import { questions, type Scores } from '../data/questions';
+import { archetypes } from '../data/archetypes';
 import { calculateScores, determineArchetype } from '../utils/scoring';
 import type { BackgroundTheme } from '../components/DynamicBackground';
 import { ChevronRight, ChevronLeft, Sparkles, AlertCircle } from 'lucide-react';
@@ -46,13 +47,21 @@ const QuizPage: React.FC = () => {
         }, 400);
     };
 
-    const handleGenerate = () => {
+    const handleGenerate = async () => {
         if (!name.trim() || !email.trim()) return;
 
         const totalScores = calculateScores(answers);
         const archetypeId = determineArchetype(totalScores);
+        const archetype = archetypes[archetypeId];
         const payload = { name, email, scores: totalScores };
         const encodedPayload = btoa(JSON.stringify(payload));
+
+        // Fire and forget email sending
+        fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, archetype })
+        }).catch(err => console.error("Email sending failed", err));
 
         navigate(`/result/${archetypeId}?d=${encodedPayload}`);
     };
