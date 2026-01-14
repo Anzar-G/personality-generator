@@ -340,6 +340,24 @@ export const ResultPage = () => {
                         </div>
                     </div>
 
+                    {/* Behavioral Insights */}
+                    <div className="bg-white/[0.01] border border-white/5 rounded-3xl overflow-hidden">
+                        <div className="grid grid-cols-1 lg:grid-cols-2">
+                            <div className="p-8 lg:p-12 border-b lg:border-b-0 lg:border-r border-white/5 space-y-4">
+                                <h4 className="text-white/40 font-bold uppercase tracking-[0.2em] text-[10px]">Behavior Harian</h4>
+                                <p className="text-xl text-white/90 leading-relaxed">
+                                    {archetype.dailyBehavior}
+                                </p>
+                            </div>
+                            <div className="p-8 lg:p-12 space-y-4">
+                                <h4 className="text-white/40 font-bold uppercase tracking-[0.2em] text-[10px]">Pattern Relasi</h4>
+                                <p className="text-xl text-white/90 leading-relaxed">
+                                    {archetype.relationshipPattern}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* The Hard Truth / Healing Tip */}
                     <div className="bg-gradient-to-br from-[var(--accent)]/20 to-transparent border border-[var(--accent)]/20 p-8 md:p-12 rounded-3xl relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
