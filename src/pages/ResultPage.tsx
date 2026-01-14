@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useParams, useSearchParams, Link } from 'react-router-dom';
 import { archetypes } from '../data/archetypes';
 import { getRandomQuote } from '../data/quotes';
-import type { Scores } from '../data/questions'; // Type-only import
+import type { Scores } from '../data/questions';
 import { Download, Share2, Zap, FileText } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { supabase } from '../supabaseClient';
@@ -12,61 +12,58 @@ export const ResultPage = () => {
     const [searchParams] = useSearchParams();
     const [loading, setLoading] = useState(true);
     const cardRef = useRef<HTMLDivElement>(null);
-    const [userData, setUserData] = useState<{ name: string; scores: Scores } | null>(null);
-    const [quote, setQuote] = useState('');
 
-    // Use useMemo to make archetype reactive to archetypeId changes
+    // Parse user data from URL (useMemo to avoid re-parsing)
+    const userData = useMemo(() => {
+        const dataParam = searchParams.get('d');
+        if (!dataParam) return null;
+        try {
+            return JSON.parse(atob(dataParam)) as { name: string; scores: Scores };
+        } catch (e) {
+            console.error("Failed to parse data", e);
+            return null;
+        }
+    }, [searchParams]);
+
+    // Get archetype (useMemo to make it reactive)
     const archetype = useMemo(() => {
         if (!archetypeId) return undefined;
         return archetypes[archetypeId];
     }, [archetypeId]);
 
-    // Default color if undefined
     const accentColor = archetype?.color || '#9d4edd';
 
-    // 1. Initial Load: Parse Data & Save to Supabase
+    // Generate quote (useMemo to avoid re-generating)
+    const quote = useMemo(() => {
+        if (!archetype) return '';
+        return getRandomQuote(archetype.id);
+    }, [archetype]);
+
+    // Save to Supabase on mount
     useEffect(() => {
-        const dataParam = searchParams.get('d');
-        if (dataParam) {
-            try {
-                const parsed = JSON.parse(atob(dataParam));
-                setUserData(parsed);
-
-                // Save to Supabase (only if parsed successfully)
-                const saveData = async () => {
-                    if (!parsed.scores) return;
-                    const { error } = await supabase
-                        .from('quiz_results')
-                        .insert([
-                            {
-                                name: parsed.name,
-                                archetype: archetype?.name || 'Unknown',
-                                scores: parsed.scores
-                            },
-                        ]);
-
-                    if (error) {
-                        console.error('Error saving result:', error);
-                    }
-                };
-                saveData();
-
-            } catch (e) {
-                console.error("Failed to parse data", e);
-            }
+        if (userData && archetype) {
+            const saveData = async () => {
+                const { error } = await supabase
+                    .from('quiz_results')
+                    .insert([
+                        {
+                            name: userData.name,
+                            archetype: archetype.name,
+                            scores: userData.scores
+                        },
+                    ]);
+                if (error) console.error('Error saving result:', error);
+            };
+            saveData();
         }
 
-        if (archetype) {
-            setQuote(getRandomQuote(archetype.id));
-        }
-
-        // Simulate analysis loading
-        setTimeout(() => setLoading(false), 2000);
-    }, [searchParams, archetype]); // Added archetype dependency
+        // Simulate loading
+        const timer = setTimeout(() => setLoading(false), 2000);
+        return () => clearTimeout(timer);
+    }, [userData, archetype]);
 
     const handleDownload = async () => {
         if (cardRef.current) {
-            // Wait for fonts to load or layout to stabilize
             await new Promise(resolve => setTimeout(resolve, 100));
             const canvas = await html2canvas(cardRef.current, {
                 backgroundColor: '#0a0a0a',
@@ -92,7 +89,7 @@ export const ResultPage = () => {
 
         if (email && userData) {
             const { error } = await supabase
-                .from('leads') // Asumsi ada tabel 'leads'
+                .from('leads')
                 .upsert([
                     { email: email, name: userData.name, archetype: archetype?.name }
                 ]);
@@ -108,6 +105,7 @@ export const ResultPage = () => {
         }
     };
 
+    // Loading state
     if (loading) {
         return (
             <div className="min-h-screen bg-background-dark flex items-center justify-center flex-col gap-4" style={{ '--accent': accentColor } as React.CSSProperties}>
@@ -117,19 +115,31 @@ export const ResultPage = () => {
         );
     }
 
-    // If archetypeId is missing or archetype not found, show error
+    // Error: Missing archetype
     if (!archetypeId || !archetype) {
         return (
             <div className="min-h-screen bg-background-dark flex items-center justify-center">
                 <div className="text-center">
                     <p className="text-white text-xl mb-4">Archetype tidak ditemukan</p>
+                    <p className="text-white/50 text-sm mb-6">ID: {archetypeId || 'undefined'}</p>
                     <Link to="/" className="text-primary hover:underline">Kembali ke Quiz</Link>
                 </div>
             </div>
         );
     }
 
-    if (!userData) return <div className="text-white text-center pt-20">Data Invalid - Silakan isi quiz lagi</div>;
+    // Error: Missing user data
+    if (!userData) {
+        return (
+            <div className="min-h-screen bg-background-dark flex items-center justify-center">
+                <div className="text-center">
+                    <p className="text-white text-xl mb-4">Data Invalid</p>
+                    <p className="text-white/50 text-sm mb-6">Silakan isi quiz lagi</p>
+                    <Link to="/" className="text-primary hover:underline">Kembali ke Quiz</Link>
+                </div>
+            </div>
+        );
+    }
 
     // Safe Accessors
     const scores = userData.scores || {};
@@ -141,13 +151,11 @@ export const ResultPage = () => {
     const emoHealthPercent = Math.min(Math.round((ehVal / 90) * 100), 100);
 
     const trauma = scores.trauma || { fight: 0, flight: 0, freeze: 0, fawn: 0 };
-    // Sort trauma entries to find Top 1 (Primary)
     const sortedTrauma = Object.entries(trauma).sort(([, a], [, b]) => (b || 0) - (a || 0));
     const primaryTrauma = sortedTrauma[0] ? sortedTrauma[0][0] : 'None';
 
     const attachment = scores.attachment || { secure: 0, anxious: 0, avoidant: 0, fearfulAvoidant: 0 };
     const attTotal = (attachment.secure || 0) + (attachment.anxious || 0) + (attachment.avoidant || 0) + (attachment.fearfulAvoidant || 0) || 1;
-    // Find dominant attachment
     const sortedAtt = Object.entries(attachment).sort(([, a], [, b]) => (b || 0) - (a || 0));
     const domAtt = sortedAtt[0] ? sortedAtt[0][0] : 'Secure';
     const domAttPct = Math.round(((sortedAtt[0]?.[1] || 0) / attTotal) * 100);

@@ -7,7 +7,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<QuizPage />} />
-        <Route path="/result/:id" element={<ResultPage />} />
+        <Route path="/result/:archetypeId" element={<ResultPage />} />
       </Routes>
     </Router>
   );
