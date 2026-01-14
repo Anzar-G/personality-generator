@@ -308,6 +308,58 @@ export const ResultPage = () => {
                 </div>
             </main>
 
+            {/* Detailed Deep Dive Section */}
+            <section className="w-full bg-white/[0.02] border-t border-white/5 py-20 px-6 lg:px-20 relative z-10">
+                <div className="max-w-4xl mx-auto space-y-20">
+
+                    {/* Who You Are */}
+                    <div className="space-y-6">
+                        <div className="flex items-center gap-4">
+                            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/10"></div>
+                            <h3 className="text-sm font-black uppercase tracking-[0.3em] text-[var(--accent)]">Who You Are</h3>
+                            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/10"></div>
+                        </div>
+                        <p className="text-xl md:text-2xl font-light leading-relaxed text-white/90 text-center italic">
+                            {archetype.detailedDescription}
+                        </p>
+                    </div>
+
+                    {/* Traits Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="bg-white/[0.03] border border-white/5 p-8 rounded-2xl space-y-4 hover:bg-white/[0.05] transition-all">
+                            <h4 className="text-emerald-400 font-bold uppercase tracking-widest text-xs">The Light (Strength)</h4>
+                            <p className="text-white/80 leading-relaxed font-medium text-lg">
+                                {archetype.strength}
+                            </p>
+                        </div>
+                        <div className="bg-white/[0.03] border border-white/5 p-8 rounded-2xl space-y-4 hover:bg-white/[0.05] transition-all">
+                            <h4 className="text-rose-400 font-bold uppercase tracking-widest text-xs">The Shadow (Weakness)</h4>
+                            <p className="text-white/80 leading-relaxed font-medium text-lg">
+                                {archetype.weakness}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* The Hard Truth / Healing Tip */}
+                    <div className="bg-gradient-to-br from-[var(--accent)]/20 to-transparent border border-[var(--accent)]/20 p-8 md:p-12 rounded-3xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                            <Zap className="w-32 h-32 text-[var(--accent)]" />
+                        </div>
+                        <div className="relative z-10 space-y-6">
+                            <h4 className="text-[var(--accent)] font-black uppercase tracking-[0.2em] text-sm">The Hard Truth / Healing Tip</h4>
+                            <p className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                                {archetype.healingTip}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Footer Insight */}
+                    <div className="text-center pt-10">
+                        <p className="text-white/30 text-xs uppercase tracking-[0.5em]">Tanggapi dengan bijak. Identitas ini bukan vonis, melainkan cermin.</p>
+                    </div>
+                </div>
+            </section>
+
             {/* Background Decorative Elements */}
             <div className="fixed top-1/4 -left-20 w-80 h-80 rounded-full blur-[120px] -z-10 opacity-30 bg-[var(--accent)]"></div>
             <div className="fixed bottom-1/4 -right-20 w-96 h-96 bg-primary/20 rounded-full blur-[140px] -z-10 opacity-20"></div>
