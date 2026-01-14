@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff006e",
+                        "archetype-yellow": "#FFE500",
+                        "background-light": "#f5f5f5",
+                        "background-dark": "#0a0a0a",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.neon-glow-yellow {
+    box-shadow: 0 0 20px rgba(255, 229, 0, 0.2), 0 0 40px rgba(255, 229, 0, 0.1)
+    }
+.neon-border-pink {
+    border: 1px solid #ff006e;
+    box-shadow: 0 0 10px rgba(255, 0, 110, 0.3)
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAu3VgyhKiXu1dkeqQxp7mXrSNGM6g7gthzD7UxTAIG_B43CfiAzvGXUTPF4beVhI6wvK56mHo-PRcgw2SYvDMCkZ5evXlqCzQm6ZsdSymn8nHCDdOeabmvpC992uq1GKLwOsyKNvzIeOxelreffT7XzR_zkBn9WhpDORDcWc6oUMF69jJ4w_F4Km5QR1fne9khDUmHphwEdj94aj4ji4cpclqI2g5CEUaZ4O9NT_Fu6uT7MwE_5AlVT_2CMzTU-Pgv6e9usRF1wmY);
+    opacity: 0.05;
+    pointer-events: none
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary selection:text-white min-h-screen">
+<div class="grain-overlay fixed inset-0 z-50"></div>
+<!-- Navigation -->
+<header class="flex items-center justify-between border-b border-white/10 px-6 py-4 lg:px-12">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded-sm flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">psychology</span>
+</div>
+<h2 class="text-lg font-bold tracking-tighter uppercase italic">@paham.diam</h2>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<nav class="flex gap-6 text-sm font-medium uppercase tracking-widest text-white/60">
+<a class="hover:text-primary transition-colors" href="#">Lab</a>
+<a class="hover:text-primary transition-colors" href="#">Archives</a>
+<a class="hover:text-primary transition-colors" href="#">Methodology</a>
+</nav>
+<button class="bg-primary hover:bg-primary/80 text-white text-[10px] font-black uppercase tracking-[0.2em] px-6 py-2 rounded-full transition-all">
+                New Test
+            </button>
+</div>
+</header>
+<main class="max-w-[1400px] mx-auto px-6 py-10 lg:py-16 grid lg:grid-cols-12 gap-12 items-start">
+<!-- Sidebar Navigation (Desktop) -->
+<aside class="hidden lg:flex lg:col-span-1 flex-col gap-8 border-r border-white/5 pr-6 h-full">
+<div class="flex flex-col gap-6">
+<a class="material-symbols-outlined text-white/40 hover:text-primary transition-all scale-110" href="#">grid_view</a>
+<a class="material-symbols-outlined text-primary scale-110" href="#">auto_awesome</a>
+<a class="material-symbols-outlined text-white/40 hover:text-primary transition-all scale-110" href="#">history</a>
+<a class="material-symbols-outlined text-white/40 hover:text-primary transition-all scale-110" href="#">settings</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="lg:col-span-11 grid lg:grid-cols-2 gap-12 items-center">
+<!-- Left: Card Preview -->
+<div class="flex flex-col items-center justify-center">
+<div class="relative group">
+<!-- Neon Glow Backlight -->
+<div class="absolute -inset-4 bg-archetype-yellow/10 blur-3xl rounded-full opacity-50"></div>
+<!-- The Personality Card (9:16 aspect ratio feel) -->
+<div class="relative w-full max-w-[380px] aspect-[9/16] bg-[#111] rounded-xl overflow-hidden border border-white/10 neon-glow-yellow flex flex-col p-8 justify-between">
+<!-- Card Background Texture -->
+<div class="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none"></div>
+<!-- Top Branding -->
+<div class="flex justify-between items-start z-10">
+<span class="text-[10px] font-bold tracking-[0.3em] uppercase text-white/30 italic">Archetype Series 01</span>
+<span class="material-symbols-outlined text-archetype-yellow text-2xl">barcode</span>
+</div>
+<!-- Central Icon & Title -->
+<div class="flex flex-col items-center gap-6 z-10">
+<div class="relative">
+<span class="material-symbols-outlined text-[100px] text-archetype-yellow font-thin leading-none opacity-90">masks</span>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-[2px] bg-background-dark rotate-[35deg]"></div>
+</div>
+<div class="text-center">
+<h3 class="text-3xl font-black italic tracking-tighter text-white uppercase leading-none">The Golden</h3>
+<h3 class="text-5xl font-black italic tracking-tighter text-archetype-yellow uppercase leading-none">Mask</h3>
+</div>
+</div>
+<!-- Stats Section on Card -->
+<div class="flex flex-col gap-4 z-10">
+<div class="space-y-1">
+<div class="flex justify-between text-[10px] font-bold uppercase tracking-widest text-white/40">
+<span>Dark Triad</span>
+<span>40%</span>
+</div>
+<div class="h-1 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-archetype-yellow w-[40%]"></div>
+</div>
+</div>
+<div class="flex justify-between items-end border-t border-white/5 pt-4">
+<div class="flex flex-col">
+<span class="text-[8px] font-bold uppercase tracking-widest text-white/30">Attachment</span>
+<span class="text-sm font-bold italic uppercase text-white">Anxious</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="text-[8px] font-bold uppercase tracking-widest text-white/30">Defense</span>
+<span class="text-sm font-bold italic uppercase text-white">Intellectualization</span>
+</div>
+</div>
+</div>
+<!-- Quote & Watermark -->
+<div class="space-y-6 z-10">
+<p class="text-center text-sm font-medium italic text-white/70 leading-relaxed px-4">
+                                "Smiling is my best defense mechanism."
+                            </p>
+<div class="pt-4 border-t border-white/5 text-center">
+<span class="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">@paham.diam</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Actions for Mobile/Tablet -->
+<div class="mt-8 flex gap-4 w-full max-w-[380px]">
+<button class="flex-1 neon-border-pink text-primary text-[10px] font-black uppercase tracking-widest py-3 rounded-lg hover:bg-primary hover:text-white transition-all">
+                        Download Card
+                    </button>
+<button class="flex-1 bg-white/5 border border-white/10 text-white text-[10px] font-black uppercase tracking-widest py-3 rounded-lg hover:bg-white/10 transition-all">
+                        Share Story
+                    </button>
+</div>
+</div>
+<!-- Right: Content & Detailed Stats -->
+<div class="space-y-12">
+<header class="space-y-4">
+<div class="inline-block bg-archetype-yellow/10 border border-archetype-yellow/20 px-3 py-1 rounded">
+<span class="text-archetype-yellow text-[10px] font-bold uppercase tracking-widest">Analysis Complete</span>
+</div>
+<h1 class="text-5xl lg:text-7xl font-black italic uppercase tracking-tighter leading-none">
+                        Archetype<br/><span class="text-white/40">Terungkap.</span>
+</h1>
+<p class="text-[#ce8da9] text-lg max-w-md leading-relaxed">
+                        Your psychological blueprint is ready. Use it wisely. Kamu pintar pura-pura, tapi jiwamu lelah. An edgy, sarcastic revelation for the modern soul.
+                    </p>
+</header>
+<!-- Detailed Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-white/5 border border-white/10 p-6 rounded-lg group hover:border-archetype-yellow/50 transition-colors">
+<p class="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-1">Dark Triad</p>
+<p class="text-3xl font-black italic tracking-tighter text-white group-hover:text-archetype-yellow transition-colors">40%</p>
+<p class="text-green-400 text-[10px] font-bold mt-2 uppercase">+5% Intensity</p>
+</div>
+<div class="bg-white/5 border border-white/10 p-6 rounded-lg group hover:border-archetype-yellow/50 transition-colors">
+<p class="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-1">Attachment</p>
+<p class="text-2xl font-black italic tracking-tighter text-white group-hover:text-archetype-yellow transition-colors">Anxious</p>
+<p class="text-orange-400 text-[10px] font-bold mt-2 uppercase">-2% Stability</p>
+</div>
+<div class="bg-white/5 border border-white/10 p-6 rounded-lg group hover:border-archetype-yellow/50 transition-colors">
+<p class="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-1">Defense</p>
+<p class="text-xl font-black italic tracking-tighter text-white group-hover:text-archetype-yellow transition-colors leading-tight">Intellectualization</p>
+<p class="text-white/20 text-[10px] font-bold mt-2 uppercase">Core Shield</p>
+</div>
+</div>
+<!-- Action Section -->
+<div class="bg-primary/5 border border-primary/20 p-8 rounded-xl space-y-6">
+<div class="space-y-2">
+<h4 class="text-xl font-black italic uppercase tracking-tighter">Get Deeper Insights</h4>
+<p class="text-white/60 text-sm">We've generated a 12-page breakdown of your 'Golden Mask' tendencies. Where should we send it?</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-3">
+<input class="flex-1 bg-black/40 border-white/10 focus:border-primary focus:ring-0 rounded-lg text-sm font-medium py-3 px-4" placeholder="Your burning email address..." type="email"/>
+<button class="bg-primary hover:bg-primary/80 px-8 py-3 rounded-lg font-black uppercase text-xs tracking-widest transition-all">
+                            Send Manual
+                        </button>
+</div>
+</div>
+<!-- Footer-style Branding -->
+<div class="pt-8 flex items-center justify-between border-t border-white/5">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-white/20 hover:text-white cursor-pointer transition-colors">share</span>
+<span class="material-symbols-outlined text-white/20 hover:text-white cursor-pointer transition-colors">download</span>
+<span class="material-symbols-outlined text-white/20 hover:text-white cursor-pointer transition-colors">info</span>
+</div>
+<p class="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Generated via @paham.diam</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Background Decoration -->
+<div class="fixed top-0 right-0 -z-10 w-1/3 h-1/2 bg-primary/5 blur-[120px]"></div>
+<div class="fixed bottom-0 left-0 -z-10 w-1/4 h-1/3 bg-archetype-yellow/5 blur-[100px]"></div>
+</body></html>

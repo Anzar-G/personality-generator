@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Result Screen - The Void Chaser Archetype</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff006e",
+                        "neon-purple": "#9D4EDD",
+                        "background-light": "#f5f5f5",
+                        "background-dark": "#0a0a0a",
+                        "card-bg": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.neon-border {
+    box-shadow: 0 0 15px rgba(157, 78, 221, 0.4), inset 0 0 10px rgba(157, 78, 221, 0.2);
+    border: 1px solid #9D4EDD
+    }
+.grainy-bg {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuD_lruM-TdY4qOOptrGxoar62vnuiuzngzUUOdafezDHzh4WMPDoSRx8chYfMlgO6P6P2Jm0SUqDyVRr15LFS4L-Ssj94EoZuE4M98bi0RAkCV5LshdP_LYvpHnRhDHaoW5xvaoZzqCOXpX7dFvHAqmt6wGXRN8-dilweXtKRfvpRumWbq1Bzt75tsKoNWhYHFudL_X99yuAQVGr-Lc5a49LDQLLlbLIhMcjYKRYS4KEpcBEioLFFihIcFj-vaEN5Pfa_2_oEqHtvA);
+    opacity: 0.05;
+    pointer-events: none
+    }
+.stat-bar-fill {
+    transition: width 1s ease-out
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white selection:bg-primary/30">
+<div class="relative min-h-screen flex flex-col overflow-x-hidden">
+<div class="grainy-bg fixed inset-0 z-0"></div>
+<!-- Top Navigation -->
+<header class="relative z-10 flex items-center justify-between border-b border-white/10 px-6 py-4 lg:px-40">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 42.4379C4 42.4379 14.0962 36.0744 24 41.1692C35.0664 46.8624 44 42.2078 44 42.2078L44 7.01134C44 7.01134 35.068 11.6577 24.0031 5.96913C14.0971 0.876274 4 7.27094 4 7.27094L4 42.4379Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tighter">@paham.diam</h2>
+</div>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-white/5 hover:bg-white/10 text-white transition-colors">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<main class="relative z-10 flex flex-1 flex-col items-center justify-start py-10 px-4">
+<!-- Headline -->
+<div class="text-center mb-8">
+<h1 class="text-white tracking-tight text-3xl md:text-5xl font-bold leading-tight mb-2">
+                    This is who you are at 3 AM.
+                </h1>
+<p class="text-white/60 text-lg">Variant 1: High-fidelity personality profile</p>
+</div>
+<!-- Central Personality Card -->
+<div class="relative group">
+<div class="absolute -inset-1 bg-neon-purple opacity-20 blur-xl group-hover:opacity-40 transition-opacity duration-500"></div>
+<div class="neon-border relative w-[320px] h-[480px] md:w-[400px] md:h-[600px] bg-card-bg rounded-xl flex flex-col p-8 overflow-hidden">
+<!-- Card Content -->
+<div class="flex flex-col h-full">
+<!-- Archetype Name -->
+<div class="border-b border-white/10 pb-4">
+<h2 class="text-2xl md:text-3xl font-bold tracking-[0.1em] uppercase text-white text-center">
+                                The Void Chaser
+                            </h2>
+</div>
+<!-- Central Icon Section -->
+<div class="flex-1 flex flex-col items-center justify-center py-6">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<!-- Abstract Eye Icon -->
+<svg class="w-full h-full text-neon-purple/80" fill="none" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<circle cx="50" cy="50" r="45" stroke="currentColor" stroke-dasharray="2 2" stroke-width="0.5"></circle>
+<path d="M10 50C10 50 25 25 50 25C75 25 90 50 90 50C90 50 75 75 50 75C25 75 10 50 10 50Z" stroke="currentColor" stroke-width="2"></path>
+<circle cx="50" cy="50" fill="currentColor" r="12"></circle>
+<path d="M30 30L40 40M60 60L70 70M70 30L60 40M40 60L30 70" stroke="currentColor" stroke-linecap="round" stroke-width="1"></path>
+</svg>
+<div class="absolute inset-0 bg-neon-purple/5 blur-3xl rounded-full"></div>
+</div>
+</div>
+<!-- Stats Section -->
+<div class="space-y-5 pt-4 border-t border-white/10">
+<!-- Stat 1 -->
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs font-bold tracking-widest text-white/50 uppercase">
+<span>Dark Triad</span>
+<span>80%</span>
+</div>
+<div class="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full shadow-[0_0_8px_#ff006e]" style="width: 80%;"></div>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs font-bold tracking-widest text-white/50 uppercase">
+<span>Attachment</span>
+<span class="text-neon-purple">Avoidant</span>
+</div>
+<div class="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-neon-purple rounded-full shadow-[0_0_8px_#9D4EDD]" style="width: 65%;"></div>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="space-y-1.5">
+<div class="flex justify-between text-xs font-bold tracking-widest text-white/50 uppercase">
+<span>Defense</span>
+<span class="text-white">Sarcasm</span>
+</div>
+<div class="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-white rounded-full shadow-[0_0_8px_white]" style="width: 90%;"></div>
+</div>
+</div>
+</div>
+<!-- Watermark -->
+<div class="pt-6 text-center">
+<p class="text-[10px] tracking-[0.3em] text-white/20 uppercase">Analytical Protocol @paham.diam</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row gap-4 mt-10 w-full max-w-[400px]">
+<button class="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-lg transition-all active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">download</span>
+                    Download Card
+                </button>
+<button class="flex-1 flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 text-white border border-white/20 font-bold h-14 rounded-lg transition-all active:scale-95">
+<span class="material-symbols-outlined">share</span>
+                    Share to Story
+                </button>
+</div>
+<!-- Email Capture -->
+<div class="mt-20 w-full max-w-[520px] bg-white/5 rounded-2xl p-8 border border-white/10">
+<div class="text-center mb-6">
+<h3 class="text-xl font-bold mb-2">The void is deep. Want the full map?</h3>
+<p class="text-white/60 text-sm">Join 20,000+ others exploring the darker side of human psychology. Gak pake basa-basi.</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-3">
+<input class="flex-1 bg-black/40 border border-white/10 rounded-lg px-4 h-12 focus:outline-none focus:border-neon-purple focus:ring-1 focus:ring-neon-purple transition-all text-white" placeholder="Your psychological anchor (email)" type="email"/>
+<button class="bg-neon-purple hover:bg-neon-purple/90 text-white font-bold px-8 h-12 rounded-lg transition-all">
+                        Get Deeper Insights
+                    </button>
+</div>
+<p class="mt-4 text-center text-[10px] text-white/30 uppercase tracking-widest">Safe data. No spam. Only dark truths.</p>
+</div>
+</main>
+<footer class="relative z-10 py-10 text-center border-t border-white/5 mt-10">
+<p class="text-white/40 text-xs tracking-widest uppercase">© 2024 PAHAM DIAM • VOID ARCHIVE 001</p>
+</footer>
+</div>
+</body></html>

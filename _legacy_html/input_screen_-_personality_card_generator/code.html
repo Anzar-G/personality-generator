@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Paham Diam - Personality Card Generator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff006e",
+                        "neon-yellow": "#FFE500",
+                        "neon-purple": "#9D4EDD",
+                        "background-light": "#f5f5f5",
+                        "background-dark": "#0a0a0a",
+                        "card-dark": "#161616",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>.neon-glow-pink {
+    box-shadow: 0 0 15px rgba(255, 0, 110, 0.4)
+    }
+.neon-glow-yellow:focus-within {
+    box-shadow: 0 0 20px rgba(255, 229, 0, 0.3);
+    border-color: #FFE500 !important
+    }
+.card-selection-glow:hover {
+    box-shadow: 0 0 15px rgba(157, 78, 221, 0.2);
+    border-color: #9D4EDD !important
+    }
+.grain-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAPz9fHKCKMeVMMKWrPNpNYEpStQTYKXI67OKdj1WY3RQlmFGNLIVRiyVneQx1tZ-57lVJIV7pmSwiue9XTj8tRoIfqUp0bhKzmSC0xM_TBgUOxYtQWMGp9rbAcYpS1QrTF8TyP8w5r0dDiZpaXecJHJu62EkWKsH24NqSjBMCzREJeu6ORfpCkSHQ-OWEdr-xkBraxuta63WlGNIuKmkiBDV7naDd5vtOSfdvxlzF07s7SpsURuzhUM0oUov2as0noWBFMWcdhjfs);
+    opacity: 0.03;
+    pointer-events: none
+    }
+body {
+    background-color: #0a0a0a
+    }</style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-white min-h-screen relative selection:bg-primary selection:text-white">
+<div class="fixed inset-0 grain-overlay z-50"></div>
+<div class="relative z-10 flex flex-col items-center w-full max-w-[1000px] mx-auto px-6 py-10">
+<!-- Top Navigation -->
+<header class="w-full flex items-center justify-between mb-20 border-b border-white/10 pb-6">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">psychology</span>
+</div>
+<h2 class="text-xl font-bold tracking-tighter italic">@paham.diam</h2>
+</div>
+<div class="flex gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">share</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</button>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="text-center mb-24">
+<h1 class="text-5xl md:text-7xl font-bold leading-[0.9] tracking-tight mb-6">
+                KAMU DIAM,<br/>TAPI AKU TAHU<br/>
+<span class="text-primary italic">KAMU BERTERIAK</span>
+</h1>
+<p class="text-lg md:text-xl text-white/60 font-light tracking-wide max-w-lg mx-auto">
+                Discover your dark personality archetype through the lens of psychological shadows.
+            </p>
+</section>
+<!-- Input Section -->
+<section class="w-full max-w-xl mb-32">
+<div class="flex flex-col gap-6">
+<label class="flex flex-col gap-4 group">
+<span class="text-sm uppercase tracking-[0.2em] text-white/40 font-semibold px-1">Identity Check</span>
+<div class="neon-glow-yellow transition-all duration-300 rounded-lg border border-white/20 bg-card-dark overflow-hidden">
+<input class="w-full bg-transparent border-none py-6 px-8 text-2xl font-medium focus:ring-0 placeholder:text-white/10 text-white" placeholder="Siapa namamu?" type="text"/>
+</div>
+</label>
+</div>
+</section>
+<!-- Quiz Questions -->
+<div class="w-full space-y-32 mb-40">
+<!-- Question 1 -->
+<section class="flex flex-col items-center">
+<div class="text-center mb-10">
+<span class="text-primary font-bold text-xs tracking-widest uppercase mb-2 block">Part 01</span>
+<h2 class="text-3xl font-bold tracking-tight">Apa yang kamu lakukan saat dikhianati?</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+<button class="group relative aspect-[3/4] bg-card-dark rounded-xl border border-white/10 overflow-hidden card-selection-glow transition-all">
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Abstract dark smoke and shadow pattern" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuASzBpQ5H2AYvwUjLx_8o7cYd_ef0mHe2YY2n4xM1mmLa-3h6An3kCSfehC7-wbGZhrXwmZh21PH5G4gJ9wsT2bFShIi_zaqVowTJFkMfVCw37i0PfhctYcsCKYi0WurwyQ9sTVHM44t3OSc-QcGhor9IJrIm3ABSYfMjdYGaHWRutGGQWjeFoIunn6iFRxtDPygyPElR8phve9f_Psa0yyMavNI8VJ45Ram_UBaOWknyKQ8ZDouQXkKtQGKapPxUQUmMw5yoxtSZQ');"></div>
+<div class="absolute bottom-0 left-0 p-6 text-left">
+<p class="text-lg font-bold leading-tight">Diam &amp; Balas Dendam</p>
+</div>
+</button>
+<button class="group relative aspect-[3/4] bg-card-dark rounded-xl border border-white/10 overflow-hidden card-selection-glow transition-all">
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Torn paper and fragile aesthetic" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAvKioX7fb65yHgVCCK39NjvJzqOKvVKjdBHrhBfOeuNeTAqfFEPtUdvyFtw4ZjLIC8L30KYxw7985CqOexSBma7anLCUk6gnf9R98LmGOKBDvU29boCxTDVIb9MOAzBjsNIz67xFAGzNtFD9ZZMOLgztTE0tKPt6QPKdsQ2-CixrXnLYKASoxRNiUTCk99cd7CRZwfQ-UYE3AdTNMpt3qIVom5SLYd59izKu8U-2GpwTwwJ-UqDfMExaPsS6_t6lsewPZdWmtDKF4');"></div>
+<div class="absolute bottom-0 left-0 p-6 text-left">
+<p class="text-lg font-bold leading-tight">Menangis di Pojok</p>
+</div>
+</button>
+<button class="group relative aspect-[3/4] bg-card-dark rounded-xl border border-white/10 overflow-hidden card-selection-glow transition-all">
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Cold marble and minimalist void" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBZe9zJFwRFeR7lQxsIoSycriY2AF_XJypcYOs3bHnq0Yn-HbaFZM2FoJvLToEhJSESlPoSdIcLNGuoP73a-hFiRzSSTQ_wgvs5v2FdoQtR_aTevHmM-8LIeLu0ikziLCi14mSsIXveZYJFXYIGmBQNeZwRLdWWiBCZZHjrPGa6z-T4bMYwgZv2IlWmQBeh2vG1a8E7nGRi_RAW2jG3y8jm3aHtWUnqd562Z0Bb8wWZ1MH_gz1nDobngLXfBXonPRU0LqoC7-_iQKM');"></div>
+<div class="absolute bottom-0 left-0 p-6 text-left">
+<p class="text-lg font-bold leading-tight">Lupakan Saja</p>
+</div>
+</button>
+</div>
+</section>
+<!-- Question 2 -->
+<section class="flex flex-col items-center">
+<div class="text-center mb-10">
+<span class="text-primary font-bold text-xs tracking-widest uppercase mb-2 block">Part 02</span>
+<h2 class="text-3xl font-bold tracking-tight">Ketakutan terbesarmu adalah...</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+<button class="group flex flex-col items-center justify-center p-12 bg-card-dark rounded-xl border border-white/10 card-selection-glow transition-all">
+<span class="material-symbols-outlined text-4xl mb-4 text-white/20 group-hover:text-neon-purple transition-colors">diversity_3</span>
+<p class="text-xl font-bold">Kesepian</p>
+</button>
+<button class="group flex flex-col items-center justify-center p-12 bg-card-dark rounded-xl border border-white/10 card-selection-glow transition-all">
+<span class="material-symbols-outlined text-4xl mb-4 text-white/20 group-hover:text-neon-purple transition-colors">trending_down</span>
+<p class="text-xl font-bold">Kegagalan</p>
+</button>
+<button class="group flex flex-col items-center justify-center p-12 bg-card-dark rounded-xl border border-white/10 card-selection-glow transition-all">
+<span class="material-symbols-outlined text-4xl mb-4 text-white/20 group-hover:text-neon-purple transition-colors">visibility_off</span>
+<p class="text-xl font-bold">Dihakimi</p>
+</button>
+</div>
+</section>
+<!-- Question 3 -->
+<section class="flex flex-col items-center">
+<div class="text-center mb-10">
+<span class="text-primary font-bold text-xs tracking-widest uppercase mb-2 block">Part 03</span>
+<h2 class="text-3xl font-bold tracking-tight">Bagaimana cara dunia melihatmu?</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+<button class="group p-8 bg-card-dark rounded-xl border border-white/10 card-selection-glow transition-all text-left">
+<h3 class="text-2xl font-bold mb-2">Misterius</h3>
+<p class="text-white/40 text-sm">Mereka tidak pernah benar-benar tahu apa yang ada di kepalamu.</p>
+</button>
+<button class="group p-8 bg-card-dark rounded-xl border border-white/10 card-selection-glow transition-all text-left">
+<h3 class="text-2xl font-bold mb-2">Ceria (Palsu)</h3>
+<p class="text-white/40 text-sm">Topengmu sempurna, tak ada yang melihat retakannya.</p>
+</button>
+<button class="group p-8 bg-card-dark rounded-xl border border-white/10 card-selection-glow transition-all text-left">
+<h3 class="text-2xl font-bold mb-2">Biasa Saja</h3>
+<p class="text-white/40 text-sm">Bersembunyi di balik keramaian adalah keahlianmu.</p>
+</button>
+</div>
+</section>
+</div>
+<!-- CTA Section -->
+<section class="w-full max-w-xl pb-32">
+<button class="w-full py-8 bg-transparent border-[6px] border-primary rounded-xl text-2xl font-bold uppercase tracking-[0.2em] neon-glow-pink hover:bg-primary hover:text-white transition-all duration-300">
+                Generate My Card
+            </button>
+<p class="text-center mt-8 text-white/30 text-sm italic">
+                *The results may reveal things you prefer to keep hidden. Proceed with caution.
+            </p>
+</section>
+<!-- Footer -->
+<footer class="w-full pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6 opacity-50">
+<div class="text-xs tracking-widest uppercase">© 2024 PAHAM DIAM LABS</div>
+<div class="flex gap-8 text-xs tracking-widest uppercase">
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+<a class="hover:text-primary transition-colors" href="#">TikTok</a>
+</div>
+</footer>
+</div>
+<!-- Decorative Elements -->
+<div class="fixed top-1/4 -left-20 w-64 h-64 bg-primary/5 blur-[120px] pointer-events-none"></div>
+<div class="fixed bottom-1/4 -right-20 w-80 h-80 bg-neon-purple/5 blur-[140px] pointer-events-none"></div>
+</body></html>
