@@ -173,7 +173,7 @@ export const ResultPage = () => {
                                 <Zap className="w-10 h-10 text-[var(--accent)]" />
                             </div>
                             <p className="text-[10px] tracking-[0.4em] font-bold uppercase mb-3 text-white/50">Dossier Psikologis</p>
-                            <h1 className="text-3xl md:text-3xl font-bold text-center leading-[0.9] tracking-tighter uppercase italic mb-2 break-words max-w-full text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60">
+                            <h1 className="text-3xl md:text-3xl font-bold text-center leading-[0.9] tracking-tighter uppercase italic mb-2 break-words max-w-full text-white drop-shadow-md">
                                 {archetype.name}
                             </h1>
                             <div className="h-0.5 w-12 rounded-full mb-3 bg-[var(--accent)]"></div>
