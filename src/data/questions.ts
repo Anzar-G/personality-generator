@@ -1,5 +1,4 @@
 
-
 export interface Scores {
     darkTriad?: number;
     emotionalHealth?: number;
@@ -15,6 +14,14 @@ export interface Scores {
         freeze?: number;
         fawn?: number;
     };
+    // Light Metrics
+    optimism?: number;
+    resilience?: number;
+    growth?: number;
+    empathy?: number;
+    selfAwareness?: number;
+    balance?: number;
+    emotionalIntelligence?: number;
 }
 
 export interface Option {
@@ -178,6 +185,157 @@ export const questions: Question[] = [
             { id: '15B', text: 'Males latihan, bolos gym seminggu', scores: { darkTriad: 2, trauma: { flight: 6 }, emotionalHealth: 1 } },
             { id: '15C', text: 'Latihan lebih keras pas gak ada dia (pembuktian)', scores: { darkTriad: 1, attachment: { avoidant: 5, secure: 5 }, emotionalHealth: 4 } },
             { id: '15D', text: 'Tanya detail, "Oke Coach, apa yang perlu diubah?"', scores: { darkTriad: 0, trauma: { fawn: 4 }, emotionalHealth: 5 } }
+        ]
+    },
+    // POSITIVE GROWTH QUESTIONS (Questions 16-30)
+    {
+        id: 16,
+        question: "Lo dapet promosi tak terduga. Apa langkah pertama lo?",
+        options: [
+            { id: '16A', text: 'Celebrate kecil, langsung susun strategi ke depan', scores: { optimism: 6, attachment: { secure: 5 }, resilience: 6 } },
+            { id: '16B', text: 'Bilang ke tim, "Ini hasil kerja kita bareng-bareng"', scores: { empathy: 6, growth: 6, emotionalIntelligence: 5 } },
+            { id: '16C', text: 'Analisa, "Kenapa gue bisa sukses? Pola apa yang gue pake?"', scores: { selfAwareness: 6, attachment: { secure: 5 }, optimism: 5 } },
+            { id: '16D', text: 'Beli reward yang bermakna buat diri sendiri (self-love)', scores: { balance: 6, resilience: 5, emotionalIntelligence: 6 } }
+        ]
+    },
+    {
+        id: 17,
+        question: "Temen deket lo baru aja capai sukses gede. Apa yang lo rasain?",
+        options: [
+            { id: '17A', text: '"Gue juga pasti bisa!" - merasa sangat terinspirasi', scores: { growth: 6, optimism: 6, resilience: 5 } },
+            { id: '17B', text: 'Kasih selamat yang tulus, terus tanya tipsnya', scores: { empathy: 6, attachment: { secure: 6 }, growth: 5 } },
+            { id: '17C', text: 'Refleksi, "Kira-kira gue masih kurang di mana?"', scores: { selfAwareness: 6, optimism: 5, resilience: 5 } },
+            { id: '17D', text: 'Ikut seneng buat dia, lanjut hari dengan tenang', scores: { balance: 5, emotionalIntelligence: 6, attachment: { secure: 5 } } }
+        ]
+    },
+    {
+        id: 18,
+        question: "Lo gagal di satu project tapi dapet banyak pelajaran. Bagaimana sikap lo?",
+        options: [
+            { id: '18A', text: '"Lesson learned, gue bakal level up di next round"', scores: { resilience: 6, growth: 6, optimism: 5 } },
+            { id: '18B', text: 'Share ceritanya ke orang lain biar mereka juga belajar', scores: { empathy: 6, attachment: { secure: 5 }, emotionalIntelligence: 6 } },
+            { id: '18C', text: 'Catat semua insight yang lo dapet di jurnal', scores: { selfAwareness: 6, growth: 5, resilience: 5 } },
+            { id: '18D', text: 'Istirahat dulu buat recharge mental dan fisik', scores: { balance: 6, emotionalIntelligence: 6, optimism: 4 } }
+        ]
+    },
+    {
+        id: 19,
+        question: "Hari ini lo ngerasa produktif dan efektif banget. Lo bakal?",
+        options: [
+            { id: '19A', text: 'Refleksi, "Kenapa hari ini bisa mantap? Kondisinya gimana?"', scores: { selfAwareness: 6, growth: 6, optimism: 5 } },
+            { id: '19B', text: 'Traktir tim atau temen kopi biar vibesnya asik terus', scores: { empathy: 6, attachment: { secure: 6 }, resilience: 5 } },
+            { id: '19C', text: 'Langsung bikin rencana biar besok lebih baik lagi', scores: { optimism: 6, growth: 5, balance: 5 } },
+            { id: '19D', text: 'Nikmatin momen puasnya, apresiasi diri sendiri', scores: { balance: 6, emotionalIntelligence: 6, attachment: { secure: 5 } } }
+        ]
+    },
+    {
+        id: 20,
+        question: "Lo spontan bantu orang asing yang kesulitan di jalan. Perasaan lo?",
+        options: [
+            { id: '20A', text: 'Merasa bermakna bisa membantu tanpa pamrih', scores: { empathy: 6, growth: 5, attachment: { secure: 6 } } },
+            { id: '20B', text: 'Lanjutin hari dengan energi yang jauh lebih positif', scores: { optimism: 6, resilience: 6, emotionalIntelligence: 5 } },
+            { id: '20C', text: 'Belajar sesuatu dari interaksi singkat tadi', scores: { selfAwareness: 6, attachment: { secure: 5 }, growth: 5 } },
+            { id: '20D', text: 'Senang tapi tetep jaga batasan diri (boundaries)', scores: { balance: 6, emotionalIntelligence: 6, resilience: 5 } }
+        ]
+    },
+    {
+        id: 21,
+        question: "Lo akhirnya berhasil capai goal harian (olahraga/baca). Reaksi lo?",
+        options: [
+            { id: '21A', text: '"Ini bukti kalau gue sebenernya mampu!"', scores: { resilience: 6, optimism: 6, growth: 5 } },
+            { id: '21B', text: 'Cerita ke temen biar mereka ikut terinspirasi', scores: { empathy: 6, attachment: { secure: 6 }, emotionalIntelligence: 5 } },
+            { id: '21C', text: 'Cek prosesnya, "Kira-kira apa yang bisa di-improve?"', scores: { selfAwareness: 6, growth: 6, optimism: 5 } },
+            { id: '21D', text: 'Kasih reward yang sehat buat ngerayain', scores: { balance: 6, emotionalIntelligence: 6, resilience: 5 } }
+        ]
+    },
+    {
+        id: 22,
+        question: "Komunitas atau circle lo ngasih apresiasi ke lo. Bagaimana respon lo?",
+        options: [
+            { id: '22A', text: '"Thanks, yuk kita lanjutin gerakannya bareng!"', scores: { growth: 6, optimism: 6, attachment: { secure: 5 } } },
+            { id: '22B', text: 'Bales dengan kontribusi yang lebih banyak lagi', scores: { empathy: 6, attachment: { secure: 6 }, resilience: 5 } },
+            { id: '22C', text: 'Refleksi soal dampak yang udah lo buat', scores: { selfAwareness: 6, growth: 5, emotionalIntelligence: 6 } },
+            { id: '22D', text: 'Tetep grounded, nggak besar kepala', scores: { balance: 6, emotionalIntelligence: 6, optimism: 5 } }
+        ]
+    },
+    {
+        id: 23,
+        question: "Lo memaafkan orang yang pernah menyakiti lo secara tulus. Rasanya?",
+        options: [
+            { id: '23A', text: '"Gue ngerasa plong banget, beban ilang"', scores: { resilience: 6, growth: 6, optimism: 6 } },
+            { id: '23B', text: 'Hubungan jadi membaik dan lebih sehat', scores: { empathy: 6, attachment: { secure: 6 }, emotionalIntelligence: 5 } },
+            { id: '23C', text: 'Mendapat insight kenapa dulu susah buat maafin', scores: { selfAwareness: 6, resilience: 5, growth: 5 } },
+            { id: '23D', text: 'Maafin tapi tetep jaga boundaries yang kuat', scores: { balance: 6, emotionalIntelligence: 6, attachment: { secure: 5 } } }
+        ]
+    },
+    {
+        id: 24,
+        question: "Lo lagi asik banget ngerjain hobi (flow state). Apa yang lo dapet?",
+        options: [
+            { id: '24A', text: 'Dapet momentum buat explore lebih jauh', scores: { optimism: 6, growth: 6, resilience: 5 } },
+            { id: '24B', text: 'Nularin energi positif ke orang sekitar', scores: { empathy: 6, attachment: { secure: 5 }, emotionalIntelligence: 6 } },
+            { id: '24C', text: 'Tau apa yang bikin lo bisa fokus (trigger flow)', scores: { selfAwareness: 6, growth: 5, optimism: 5 } },
+            { id: '24D', text: 'Tau kapan harus berhenti buat istirahat', scores: { balance: 6, emotionalIntelligence: 6, attachment: { secure: 5 } } }
+        ]
+    },
+    {
+        id: 25,
+        question: "Junior atau temen lo sukses gara-gara bimbingan lo. Lo merasa?",
+        options: [
+            { id: '25A', text: 'Bangga banget liat pertumbuhan mereka', scores: { growth: 6, empathy: 6, attachment: { secure: 6 } } },
+            { id: '25B', text: '"Metode dan cara gue ternyata berhasil"', scores: { selfAwareness: 6, optimism: 6, resilience: 5 } },
+            { id: '25C', text: 'Ngerayain bareng-bareng sama mereka', scores: { empathy: 6, emotionalIntelligence: 6, balance: 5 } },
+            { id: '25D', text: 'Siap ngebimbing orang lain yang membutuhkan', scores: { optimism: 6, growth: 5, attachment: { secure: 5 } } }
+        ]
+    },
+    {
+        id: 26,
+        question: "Lo berhasil lewatin minggu yang super berat dengan baik. Bagaimana pikiran lo?",
+        options: [
+            { id: '26A', text: '"Gue ngerasa jauh lebih kuat sekarang"', scores: { resilience: 6, optimism: 6, growth: 5 } },
+            { id: '26B', text: 'Berkat bantuan orang terdekat juga', scores: { empathy: 6, attachment: { secure: 6 }, emotionalIntelligence: 6 } },
+            { id: '26C', text: 'Analisa apa yang bikin minggu ini berat banget', scores: { selfAwareness: 6, growth: 6, resilience: 5 } },
+            { id: '26D', text: 'Langsung ritual self-care buat pemulihan', scores: { balance: 6, emotionalIntelligence: 6, optimism: 5 } }
+        ]
+    },
+    {
+        id: 27,
+        question: "Lo liat progress lo selama satu tahun terakhir. Apa yang lo rasain?",
+        options: [
+            { id: '27A', text: 'Bersyukur dan gak sabar buat tahun depan', scores: { optimism: 6, growth: 6, emotionalIntelligence: 6 } },
+            { id: '27B', text: 'Berterima kasih sama orang-orang yang bantu', scores: { empathy: 6, attachment: { secure: 6 }, resilience: 5 } },
+            { id: '27C', text: 'Bikin rencana buat evolusi berikutnya', scores: { selfAwareness: 6, growth: 5, optimism: 6 } },
+            { id: '27D', text: 'Ngerayain dengan cara yang seimbang', scores: { balance: 6, emotionalIntelligence: 6, attachment: { secure: 5 } } }
+        ]
+    },
+    {
+        id: 28,
+        question: "Lo nemuin passion baru yang bikin semangat. Langkah lo?",
+        options: [
+            { id: '28A', text: 'Deep dive riset soal bidang baru itu', scores: { growth: 6, optimism: 6, selfAwareness: 5 } },
+            { id: '28B', text: 'Ajak temen-temen buat nyobain bareng', scores: { empathy: 6, attachment: { secure: 6 }, resilience: 5 } },
+            { id: '28C', text: 'Coba sedikit-sedikit dulu biar teratur', scores: { balance: 6, emotionalIntelligence: 6, optimism: 5 } },
+            { id: '28D', text: '"Inilah panggilan hidup gue yang baru!"', scores: { resilience: 6, growth: 5, attachment: { secure: 5 } } }
+        ]
+    },
+    {
+        id: 29,
+        question: "Ada orang yang minta advice karir ke lo. Apa yang lo share?",
+        options: [
+            { id: '29A', text: 'Ceritain perjalanan lo naik turunnya', scores: { empathy: 6, growth: 6, attachment: { secure: 5 } } },
+            { id: '29B', text: '"Lo pasti bisa kayak gue, semangat!"', scores: { optimism: 6, resilience: 6, selfAwareness: 5 } },
+            { id: '29C', text: 'Tanya dulu apa tujuan dan goals dia', scores: { selfAwareness: 6, empathy: 5, emotionalIntelligence: 6 } },
+            { id: '29D', text: '"Mulai aja dari hal kecil tapi konsisten"', scores: { balance: 6, growth: 5, attachment: { secure: 6 } } }
+        ]
+    },
+    {
+        id: 30,
+        question: "Lo akhirnya dapet work-life balance yang pas. Apa langkah lo?",
+        options: [
+            { id: '30A', text: 'Jaga sistem ini biar terus berjalan', scores: { balance: 6, emotionalIntelligence: 6, optimism: 6 } },
+            { id: '30B', text: 'Inspirasi circle lo buat capai hal yang sama', scores: { empathy: 6, attachment: { secure: 6 }, growth: 5 } },
+            { id: '30C', text: 'Analisa bagian mana yang paling memicu hasil', scores: { selfAwareness: 6, resilience: 6, optimism: 5 } },
+            { id: '30D', text: 'Nikmatin hidup yang lebih sustainable', scores: { growth: 6, emotionalIntelligence: 5, attachment: { secure: 5 } } }
         ]
     }
 ];

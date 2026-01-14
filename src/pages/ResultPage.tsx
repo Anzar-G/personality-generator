@@ -80,7 +80,7 @@ export const ResultPage = () => {
     const handleShare = () => {
         const url = window.location.href;
         navigator.clipboard.writeText(url);
-        alert('Link tersalin! Sebarkan kegelapan lo.');
+        alert('Link tersalin! Bagikan journey lo.');
     };
 
     const handleJoinChallenge = async () => {
@@ -143,12 +143,19 @@ export const ResultPage = () => {
 
     // Safe Accessors
     const scores = userData.scores || {};
-    const darkTriadVal = scores.darkTriad || 0;
-    const ehVal = scores.emotionalHealth || 0;
 
-    // Normalize to 0-100 based on max 90 (15 questions * 6 max score)
-    const darkTriadPercent = Math.min(Math.round((darkTriadVal / 90) * 100), 100);
-    const emoHealthPercent = Math.min(Math.round((ehVal / 90) * 100), 100);
+    // Dynamic Stats based on Archetype Type
+    const isLight = archetype.type === 'light';
+
+    const primaryLabel = isLight ? 'Growth Potential' : 'Sisi Gelap';
+    const secondaryLabel = isLight ? 'Emotional Intel' : 'Kesehatan Emosi';
+
+    const primaryVal = isLight ? (scores.growth || 0) : (scores.darkTriad || 0);
+    const secondaryVal = isLight ? (scores.emotionalIntelligence || 0) : (scores.emotionalHealth || 0);
+
+    // Normalize (max 15q * 6 = 90)
+    const primaryPercent = Math.min(Math.round((primaryVal / 90) * 100), 100);
+    const secondaryPercent = Math.min(Math.round((secondaryVal / 90) * 100), 100);
 
     const trauma = scores.trauma || { fight: 0, flight: 0, freeze: 0, fawn: 0 };
     const sortedTrauma = Object.entries(trauma).sort(([, a], [, b]) => (b || 0) - (a || 0));
@@ -206,25 +213,25 @@ export const ResultPage = () => {
 
                         {/* Card Middle: Stats */}
                         <div className="flex flex-col gap-6 z-10">
-                            {/* Dark Triad Bar */}
+                            {/* Primary Metric */}
                             <div className="space-y-2">
                                 <div className="flex justify-between items-end">
-                                    <span className="text-[10px] uppercase tracking-widest text-white/60">Sisi Gelap</span>
-                                    <span className="font-bold text-lg leading-none text-[var(--accent)]">{darkTriadPercent}%</span>
+                                    <span className="text-[10px] uppercase tracking-widest text-white/60">{primaryLabel}</span>
+                                    <span className="font-bold text-lg leading-none text-[var(--accent)]">{primaryPercent}%</span>
                                 </div>
                                 <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className="h-full rounded-full bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]/50" style={{ width: `${darkTriadPercent}%` }}></div>
+                                    <div className="h-full rounded-full bg-[var(--accent)] shadow-[0_0_10px_var(--accent)]/50" style={{ width: `${primaryPercent}%` }}></div>
                                 </div>
                             </div>
 
-                            {/* Emotional Health Bar */}
+                            {/* Secondary Metric */}
                             <div className="space-y-2">
                                 <div className="flex justify-between items-end">
-                                    <span className="text-[10px] uppercase tracking-widest text-white/60">Kesehatan Emosi</span>
-                                    <span className="font-bold text-lg leading-none text-emerald-400">{emoHealthPercent}%</span>
+                                    <span className="text-[10px] uppercase tracking-widest text-white/60">{secondaryLabel}</span>
+                                    <span className="font-bold text-lg leading-none text-emerald-400">{secondaryPercent}%</span>
                                 </div>
                                 <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                                    <div className="h-full bg-emerald-500 rounded-full shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: `${emoHealthPercent}%` }}></div>
+                                    <div className="h-full bg-emerald-500 rounded-full shadow-[0_0_10px_rgba(16,185,129,0.5)]" style={{ width: `${secondaryPercent}%` }}></div>
                                 </div>
                             </div>
 

@@ -62,7 +62,7 @@ const QuizPage: React.FC = () => {
                     <span className="text-primary italic">KAMU BERTERIAK</span>
                 </h1>
                 <p className="text-lg md:text-xl text-white/60 font-light tracking-wide max-w-lg mx-auto">
-                    Discover your dark personality archetype through the lens of psychological shadows.
+                    Analyze your psychological archetype—from the deepest shadows to your highest growth potential.
                 </p>
             </section>
 
