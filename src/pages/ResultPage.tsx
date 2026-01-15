@@ -325,7 +325,7 @@ export const ResultPage = () => {
                             <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-primary font-bold">Comprehensive Dossier</span>
                             <div className="h-px w-12 bg-white/10" />
                         </div>
-                        <h2 className="text-4xl md:text-6xl font-serif font-black italic tracking-tighter leading-tight px-4 capitalize">
+                        <h2 className="text-2xl md:text-3xl font-serif font-bold italic tracking-tight leading-relaxed max-w-2xl mx-auto">
                             {archetype.detailedDescription}
                         </h2>
                     </div>
@@ -346,11 +346,11 @@ export const ResultPage = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-2">
                             <div className="p-12 border-b lg:border-b-0 lg:border-r border-white/5 space-y-6">
                                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold">Daily Dynamics</span>
-                                <p className="text-2xl text-white/90 leading-tight font-serif italic">{archetype.dailyBehavior}</p>
+                                <p className="text-lg md:text-xl text-white/80 leading-relaxed font-serif">{archetype.dailyBehavior}</p>
                             </div>
                             <div className="p-12 space-y-6">
                                 <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/20 font-bold">Relational Core</span>
-                                <p className="text-2xl text-white/90 leading-tight font-serif italic">{archetype.relationshipPattern}</p>
+                                <p className="text-lg md:text-xl text-white/80 leading-relaxed font-serif">{archetype.relationshipPattern}</p>
                             </div>
                         </div>
                     </div>
@@ -360,7 +360,7 @@ export const ResultPage = () => {
                         <div className="absolute inset-0 border border-primary/20 rounded-[3rem] -z-10" />
                         <Zap className="w-16 h-16 mx-auto mb-10 text-primary opacity-50 group-hover:scale-110 transition-transform duration-500" />
                         <h4 className="font-mono text-[10px] uppercase tracking-[0.5em] text-primary font-bold mb-8">The Hard Truth</h4>
-                        <p className="text-3xl md:text-5xl font-serif font-black italic tracking-tighter text-white leading-tight">
+                        <p className="text-2xl md:text-3xl font-serif font-bold italic tracking-tight text-white leading-relaxed">
                             {archetype.healingTip}
                         </p>
                     </div>
