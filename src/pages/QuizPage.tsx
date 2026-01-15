@@ -56,15 +56,21 @@ const QuizPage: React.FC = () => {
         const payload = { name, email, scores: totalScores };
         const encodedPayload = btoa(JSON.stringify(payload));
 
-        // Fire and forget email sending
-        fetch('/api/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, archetype, scores: totalScores })
-        }).catch(err => {
-            console.error("Email sending failed", err);
-            // alert("Email gagal dikirim. Kalo ngetes lokal emang nggak jalan, harus di Vercel.");
-        });
+        // Send email and wait for it to ensure it's not cancelled by navigation
+        try {
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, archetype, scores: totalScores })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Email API error:", errorData);
+            }
+        } catch (err) {
+            console.error("Network error sending email:", err);
+        }
 
         navigate(`/result/${archetypeId}?d=${encodedPayload}`);
     };
