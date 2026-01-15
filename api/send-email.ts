@@ -4,39 +4,51 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
 
-  const { name, email, archetype, scores } = req.body;
+    const { name, email, archetype, scores } = req.body;
 
-  if (!email || !name || !archetype || !scores) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
+    if (!email || !name || !archetype || !scores) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
 
-  // Normalization logic consistent with scoring.ts
-  const norm = (val: number | undefined) => Math.min(((val || 0) / 90) * 100, 100);
+    // Normalization logic consistent with scoring.ts
+    const norm = (val: number | undefined) => Math.min(((val || 0) / 90) * 100, 100);
 
-  const darkScore = Math.round(norm(scores.darkTriad));
-  const lightMetrics = [
-    scores.optimism, scores.resilience, scores.growth,
-    scores.empathy, scores.selfAwareness, scores.balance,
-    scores.emotionalIntelligence, scores.emotionalHealth
-  ];
-  const lightScore = Math.round(lightMetrics.reduce((a, b) => a + norm(b), 0) / lightMetrics.length);
+    const darkScore = Math.round(norm(scores.darkTriad));
+    const lightMetrics = [
+        scores.optimism, scores.resilience, scores.growth,
+        scores.empathy, scores.selfAwareness, scores.balance,
+        scores.emotionalIntelligence, scores.emotionalHealth
+    ];
+    const lightScore = Math.round(lightMetrics.reduce((a, b) => a + norm(b), 0) / lightMetrics.length);
 
-  // Dynamic URLs (Fallback to production if origin is missing)
-  const origin = req.headers.origin || 'https://paham-diam.vercel.app';
-  const resultUrl = `${origin}/result/${archetype.id}?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`;
-  const dashboardUrl = origin;
-  const downloadUrl = resultUrl;
+    // Dynamic URLs (Fallback to production if origin is missing)
+    // IMPORTANT: Gmail often flags localhost links as dangerous. 
+    // We try to use a reliable host to make sure links are absolute and valid.
+    const host = req.headers.host || 'paham-diam.vercel.app';
+    const protocol = host.includes('localhost') ? 'http' : 'https';
+    const baseUrl = `${protocol}://${host}`;
 
-  try {
-    const { data, error } = await resend.emails.send({
-      from: 'Paham Diam <onboarding@resend.dev>',
-      to: [email],
-      subject: `Identity Dossier lo udah siap, ${name}.`,
-      html: `
+    // Use the actual origin if available, otherwise build from host
+    const origin = req.headers.origin || baseUrl;
+
+    // RE-ENCODE PAYLOAD TO MATCH ResultPage.tsx EXPECTATIONS
+    const payload = { name, email, scores };
+    const encodedPayload = Buffer.from(JSON.stringify(payload)).toString('base64');
+
+    const resultUrl = `${origin}/result/${archetype.id}?d=${encodedPayload}`;
+    const dashboardUrl = origin;
+    const downloadUrl = resultUrl;
+
+    try {
+        const { data, error } = await resend.emails.send({
+            from: 'Paham Diam <onboarding@resend.dev>',
+            to: [email],
+            subject: `Identity Dossier lo udah siap, ${name}.`,
+            html: `
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,8 +64,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                     <!-- Header Image / Banner -->
                     <tr>
                         <td align="center" style="padding: 40px 40px 20px 40px;">
-                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #7c3aed, #4f46e5); border-radius: 16px; margin-bottom: 24px;">
-                                <img src="https://api.iconify.design/lucide:sparkles.svg?color=white" width="30" height="30" style="margin-top: 15px;" alt="Logo">
+                            <!-- We use a styled div with a text symbol as a fallback for the logo -->
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #7c3aed, #4f46e5); border-radius: 16px; margin-bottom: 24px; line-height: 60px; text-align: center;">
+                                <span style="font-size: 30px; color: white;">✦</span>
                             </div>
                             <h1 style="font-size: 28px; font-weight: 800; margin: 0; letter-spacing: -0.02em; color: #f8fafc;">IDENTITY REVEALED.</h1>
                             <p style="text-transform: uppercase; letter-spacing: 0.3em; font-size: 10px; color: #7c3aed; font-weight: 700; margin-top: 8px;">Dossier Archive // Unit 12-B</p>
@@ -65,7 +78,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                         <td style="padding: 20px 40px 40px 40px;">
                             <p style="font-size: 16px; line-height: 1.6; color: #94a3b8; margin: 0;">
                                 Halo <strong>${name}</strong>,<br><br>
-                                Lo baru aja nuker kejujuran lo sama insight yang mahal. 17 pertanyaan tadi bukan cuma kuis, tapi pembedahan psikometri buat ngeliat apa yang selama ini lo sembunyiin di bawah radar.
+                                Lo baru aja nuker kejujuran lo sama insight yang mahal. 30 pertanyaan tadi bukan cuma kuis, tapi pembedahan psikometri buat ngeliat apa yang selama ini lo sembunyiin di bawah radar.
                                 <br><br>
                                 Ini jackpot self-awareness lo hari ini.
                             </p>
@@ -225,14 +238,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 </body>
 </html>
       `,
-    });
+        });
 
-    if (error) {
-      return res.status(400).json({ error });
+        if (error) {
+            return res.status(400).json({ error });
+        }
+
+        return res.status(200).json({ data });
+    } catch (error) {
+        return res.status(500).json({ error: (error as Error).message });
     }
-
-    return res.status(200).json({ data });
-  } catch (error) {
-    return res.status(500).json({ error: (error as Error).message });
-  }
 }
