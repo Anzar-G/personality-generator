@@ -40,7 +40,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const encodedPayload = Buffer.from(JSON.stringify(payload)).toString('base64');
 
     const resultUrl = `${origin}/result/${archetype.id}?d=${encodedPayload}`;
-    const dashboardUrl = origin;
+    const dashboardUrl = resultUrl;
     const downloadUrl = resultUrl;
 
     try {
@@ -78,9 +78,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                         <td style="padding: 20px 40px 40px 40px;">
                             <p style="font-size: 16px; line-height: 1.6; color: #94a3b8; margin: 0;">
                                 Halo <strong>${name}</strong>,<br><br>
-                                Lo baru aja nuker kejujuran lo sama insight yang mahal. 30 pertanyaan tadi bukan cuma kuis, tapi pembedahan psikometri buat ngeliat apa yang selama ini lo sembunyiin di bawah radar.
+                                Analisis kepribadian lo dari 30 pertanyaan kuis tadi udah selesai diproses. Dossier ini bakal ngebuka sisi terdalam dari archetype lo.
                                 <br><br>
-                                Ini jackpot self-awareness lo hari ini.
+                                Cek detail skor dan analisisnya di bawah:
                             </p>
                         </td>
                     </tr>
@@ -224,8 +224,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                                 </tr>
                                 <tr>
                                     <td style="padding-top: 30px; font-size: 11px; color: #334155; text-transform: uppercase; letter-spacing: 0.2em;">
-                                        PAHAM DIAM LABS // DEPT. PSYCHOMETRICS<br>
-                                        Joined by 2,847 others this week.
+                                        PAHAM DIAM LABS // DEPT. PSYCHOMETRICS
                                     </td>
                                 </tr>
                             </table>
