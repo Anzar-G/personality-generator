@@ -11,6 +11,22 @@ export interface Archetype {
     healingTip: string;
     color: string;
     mbtiLogic?: string;
+    // Premium Email Fields
+    tagline: string;
+    rarity: string;
+    mbti: string;
+    coreDrive: string;
+    stressMode: string;
+    relPattern: string;
+    power: string;
+    workStyle: string;
+    socialStyle: string;
+    warningSign: string;
+    superpower: string;
+    challenge1: string;
+    journalPrompt: string;
+    microHabit: string;
+    quote: string;
 }
 
 export const archetypes: Record<string, Archetype> = {
@@ -27,7 +43,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Self-worth lo sangat bergantung pada seberapa besar lo bisa kontrol orang.',
         healingTip: 'Fe Integration: Belajar jujur soal keinginan lo tanpa harus pake topeng harmoni palsu.',
         color: '#ef4444',
-        mbtiLogic: 'Fe > Ni > Se > Ti (Shadow)'
+        mbtiLogic: 'Fe > Ni > Se > Ti (Shadow)',
+        tagline: 'Senyum lo adalah gerbang, tapi dalemnya labirin tanpa jalan keluar.',
+        rarity: '8%',
+        mbti: 'ENFJ/ESFJ Shadow',
+        coreDrive: 'Kontrol emosional total atas circle terdekat.',
+        stressMode: 'Silent treatment bertenaga nuklir sampe lawan minta maaf.',
+        relPattern: 'Bikin partner ngerasa "beruntung" dapet lo, padahal lo yg manfaatin mereka.',
+        power: 'Infiltrasi emosional—lo tau celah hati orang dlm 5 menit.',
+        workStyle: 'Politik kantor level tinggi, dapet promosi lewat jalur "favoritisme".',
+        socialStyle: 'Pusat perhatian, tapi semua orang sebenernya agak "waspada" sama lo.',
+        warningSign: 'Lo mulai ngerasa orang lain itu cuma "bidak" di papan catur lo.',
+        superpower: 'Emotional Alchemist—bisa ngubah benci jadi cinta dlm sekejap.',
+        challenge1: 'Puji kelebihan musuh lo secara tulus hari ini tanpa niat manipulatif.',
+        journalPrompt: 'Kapan terakhir kali lo beneran sayang orang tanpa pengen ngontrol mereka?',
+        microHabit: 'Berhenti sejenak pas mau bohong demi "harmoni", katakan yang sejujurnya.',
+        quote: 'Kontrol itu fana, koneksi yang jujur itu abadi.'
     },
     'silent-observer': {
         id: 'silent-observer',
@@ -41,7 +72,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Kekosongan emosional yang bikin lo ngerasa asing di mana pun.',
         healingTip: 'Se-Fe Challenge: Mulai interaksi kecil yang nggak ada tujuannya cuma buat koneksi biasa.',
         color: '#64748b',
-        mbtiLogic: 'Ni / Ti > Ne / Te > Fe / Se (Shadow)'
+        mbtiLogic: 'Ni / Ti > Ne / Te > Fe / Se (Shadow)',
+        tagline: 'Lo ada di ruangan, tapi sebenernya lo lagi di planet lain.',
+        rarity: '15%',
+        mbti: 'INTJ/INFJ Shadow',
+        coreDrive: 'Mencari kebenaran objektif tanpa harus "ngotorin" tangan.',
+        stressMode: 'Menghilang tanpa kabar sampe semua masalah reda sendiri.',
+        relPattern: 'Pengamat dari jauh, susah banget buat bener-bener "masuk" ke hati orang.',
+        power: 'Deteksi kepalsuan—lo tau siapa yang bohong sebelum mereka ngomong.',
+        workStyle: 'Solo player yang kerjanya beres tanpa banyak omong atau drama.',
+        socialStyle: 'Wallflower yang sebenernya tau semua rahasia orang di pesta itu.',
+        warningSign: 'Dunia luar mulai kerasa kayak "film" yang lo tonton doang.',
+        superpower: 'Void Vision—bisa ngeliat apa yang orang lain lewatkan dlm keheningan.',
+        challenge1: 'Tegur satu kesalahan orang hari ini, jangan cuma ditonton doang.',
+        journalPrompt: 'Hal apa yang bikin lo takut kalo orang beneran kenal sama diri lo?',
+        microHabit: 'Ngomong satu kalimat random ke orang asing buat latihan presence.',
+        quote: 'Dunia nggak berhenti muter cuma karena lo diem.'
     },
     'integrated-self-dark': {
         id: 'integrated-self-dark',
@@ -55,7 +101,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Terlalu kaku sama diri sendiri karena takut balik ke pattern lama.',
         healingTip: 'Terusin shadow work, jangan takut sama emosi "berantakan" yang muncul.',
         color: '#3b82f6',
-        mbtiLogic: 'Healthy Function Stack'
+        mbtiLogic: 'Healthy Function Stack',
+        tagline: 'Singa yang udah bisa diajak ngobrol, tapi tetep singa.',
+        rarity: '5%',
+        mbti: 'XNXJ Integrated',
+        coreDrive: 'Harmoni antara hasrat gelap dan tanggung jawab moral.',
+        stressMode: 'Merenung serius buat cari jalan tengah yang paling efisien.',
+        relPattern: 'Komitmen tinggi tapi jujur banget soal sisi buruk masing-masing.',
+        power: 'Mastery of Shadow—bisa pake energi agresif buat hal produktif.',
+        workStyle: 'Leader yang tegas tapi punya empati yang udah terasah.',
+        socialStyle: 'Tenang, punya aura yang bikin orang segan tapi nggak takut.',
+        warningSign: 'Lo mulai ngerasa "paling suci" karena udah bisa kontrol shadow.',
+        superpower: 'Dual Consciousness—bisa liat dua sisi koin sekaligus.',
+        challenge1: 'Terima satu kegagalan hari ini tanpa harus "nganalisa" berlebihan.',
+        journalPrompt: 'Bagian mana dari shadow lo yang paling lo banggain sekarang?',
+        microHabit: 'Tarik napas 10 detik pas ngrasain dorongan buat manipulasi situasi.',
+        quote: 'Kegelapan bukan buat dibasmi, tapi buat dinavigasi.'
     },
     'self-saboteur': {
         id: 'self-saboteur',
@@ -69,7 +130,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Self-handicapping—lo bikin hambatan buat diri lo sendiri.',
         healingTip: 'Te-Logic: Fokus ke hasil kecil harian yang nyata, bukan cuma perasaan lo.',
         color: '#f59e0b',
-        mbtiLogic: 'Fi > Ne / Se > Te / Ni (Shadow)'
+        mbtiLogic: 'Fi > Ne / Se > Te / Ni (Shadow)',
+        tagline: 'Lo adalah arsitek dari gedung yang lo hancurin sendiri.',
+        rarity: '18%',
+        mbti: 'INFP/ISFP Shadow',
+        coreDrive: 'Mencari makna lewat penderitaan yang lo ciptain sendiri.',
+        stressMode: 'Ghosting dunia luar buat tenggelam dlm rasa bersalah.',
+        relPattern: 'Bikin partner ngerasa harus "nyelamatin" lo tiap hari.',
+        power: 'Creative Melancholy—lo bisa ngubah rasa sakit jadi karya luar biasa.',
+        workStyle: 'Brilian pas lagi mood, ilang ditelan bumi pas lagi "low".',
+        socialStyle: 'Drama magnet, orang selalu pengen tau lo lagi "kenapa" hari ini.',
+        warningSign: 'Lo mulai bangga sama status lo sebagai "korban keadaan".',
+        superpower: 'Emotional Resonance—bisa bikin orang ngerasain apa yang lo tulis.',
+        challenge1: 'Selesaikan satu tugas kecil hari ini TANPA harus merasa sempurna.',
+        journalPrompt: 'Keuntungan apa yang lo dapet dengan terus-terusan gagal?',
+        microHabit: 'Bilang "Gue layak dapet hal baik" tiap kali abis bikin blunder.',
+        quote: 'Hidup bukan cuma soal ngerasain, tapi soal ngelakuin.'
     },
     'stoic-protector': {
         id: 'stoic-protector',
@@ -83,7 +159,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Mati rasa emosional yang bikin orang sekitar lo ngerasa kejauh.',
         healingTip: 'Fe/Ne Play: Izinkan diri lo buat nggak berguna sesekali dan cuma having fun.',
         color: '#57534e',
-        mbtiLogic: 'Si / Ti > Se / Te > Fe / Ni (Shadow)'
+        mbtiLogic: 'Si / Ti > Se / Te > Fe / Ni (Shadow)',
+        tagline: 'Tembok yang kuat, tapi ngerasain sepi yang luar biasa.',
+        rarity: '14%',
+        mbti: 'ISTJ/ISFJ Shadow',
+        coreDrive: 'Menjaga stabilitas dunia luar meski dunia dalem lo hancur.',
+        stressMode: 'Silent rage—lo kerja lebih keras biar nggak usah mikirin emosi.',
+        relPattern: 'Provider yang hebat, tapi partner ngerasa kesepian di sebelah lo.',
+        power: 'Durability—lo adalah orang terakhir yang bertahan pas krisis.',
+        workStyle: 'The Backbone—lo yang benerin semua kekacauan orang lain.',
+        socialStyle: 'Serious, talk-to-the-point, nggak suka small talk yang receh.',
+        warningSign: 'Lo mulai ngerasa "mati rasa" itu adalah sebuah kekuatan.',
+        superpower: 'Unshakable Anchor—lo adalah tempat bersandar paling stabil di circle lo.',
+        challenge1: 'Ceritain satu hal yang bikin lo sedih ke orang terdekat hari ini.',
+        journalPrompt: 'Beban siapa yang sebenernya nggak usah lo pikul?',
+        microHabit: 'Tarik napas dan tanya "Gue sebenernya capek nggak?" tiap jam 5 sore.',
+        quote: 'Kekuatan bukan soal nahan beban, tapi soal tau kapan harus naruh beban.'
     },
     'chaotic-empath': {
         id: 'chaotic-empath',
@@ -97,7 +188,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Self-depletion—lo selalu capek mental karena ngurusin emosi dunia.',
         healingTip: 'Ti-Boundaries: Mulai pake logic buat nilai apakah orang layak dapet energi lo.',
         color: '#d946ef',
-        mbtiLogic: 'Ne / Fe > Fi / Si > Ti / Se (Shadow)'
+        mbtiLogic: 'Ne / Fe > Fi / Si > Ti / Se (Shadow)',
+        tagline: 'Kaca yang mantulin semua cahaya orang, tapi lupa dia sendiri apa.',
+        rarity: '20%',
+        mbti: 'ENFP/ESFP Shadow',
+        coreDrive: 'Diterima oleh semua orang dengan cara jadi siapapun yang mereka butuhin.',
+        stressMode: 'Oversharing parah terus nyesel pas tengah malem.',
+        relPattern: 'People pleasing level dewa sampe lo nyesek sendiri.',
+        power: 'Atmosphere Bender—lo bisa ubah vibe ruangan dlm sedetik.',
+        workStyle: 'The Glue—lo yang bikin tim tetep solid lewat obrolan manis.',
+        socialStyle: 'Social butterfly yang aslinya lagi anxiety krn mikirin opini orang.',
+        warningSign: 'Lo mulai ngerasa "jahat" tiap kali mau ngomong "nggak".',
+        superpower: 'Emotional Radar—bisa ngerasain ketegangan dlm ruangan meski nggak ada yg ngomong.',
+        challenge1: 'Bilang "Gue nggak bisa bantu hari ini" ke satu orang.',
+        journalPrompt: 'Siapa diri lo kalo lo nggak lagi nyenengin orang lain?',
+        microHabit: 'Tunggu 10 menit sebelum bales chat orang buat ngelatih boundaries.',
+        quote: 'Lo bukan tempat pembuangan emosi orang lain.'
     },
     'calculated-detacher': {
         id: 'calculated-detacher',
@@ -111,7 +217,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Kesepian di puncak yang lo tutup-tutupi pake status atau uang.',
         healingTip: 'Fi-Values: Cari tujuan hidup yang nggak ada hubungannya sama sukses materi.',
         color: '#0ea5e9',
-        mbtiLogic: 'Te > Ni / Si > Fi / Ne (Shadow)'
+        mbtiLogic: 'Te > Ni / Si > Fi / Ne (Shadow)',
+        tagline: 'Otak lo adalah spreadsheet, dan perasaan adalah error yang harus dihapus.',
+        rarity: '10%',
+        mbti: 'ENTJ/ESTJ Shadow',
+        coreDrive: 'Efisiensi absolut dan pencapaian target tanpa distraksi emosional.',
+        stressMode: 'Micromanagement brutal ke semua orang di sekitar lo.',
+        relPattern: 'Semua orang punya "masa berlaku" di hidup lo.',
+        power: 'Cold Logic—lo bisa ambil keputusan paling berat tanpa gemetar.',
+        workStyle: 'The Executioner—lo yang dapet hasil pas semua orang cuma bisa rapat.',
+        socialStyle: 'Networking cuma buat cari "who can get me what".',
+        warningSign: 'Lo mulai manggil orang pake "title" mereka, bukan nama.',
+        superpower: 'Outcome Vision—bisa liat hasil akhir dlm hitungan milidetik.',
+        challenge1: 'Lakuin sesuatu yang "buang waktu" sama temen tanpa dapet untung apa-apa.',
+        journalPrompt: 'Siape orang yang bakal lo cari pas lo udah nggak punya jabatan apa-apa?',
+        microHabit: 'Tanya "Gimana perasaan lo?" ke satu orang tanpa niat manipulatif.',
+        quote: 'Profit itu angka, hidup itu cerita.'
     },
     'overthinking-analyzer': {
         id: 'overthinking-analyzer',
@@ -125,7 +246,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Analytic paralysis—lo sering kehilangan kesempatan karena kelamaan mikir.',
         healingTip: 'Se-Action: Lakuin sesuatu tanpa mikir dampaknya, push yourself buat gerak.',
         color: '#8b5cf6',
-        mbtiLogic: 'Ti / Ni > Ne / Fe > Se / Fi (Shadow)'
+        mbtiLogic: 'Ti / Ni > Ne / Fe > Se / Fi (Shadow)',
+        tagline: 'Otak lo adalah sirkuit yang nggak pernah tidur, meski badan udah mau mati.',
+        rarity: '12%',
+        mbti: 'INTP/ISTP Shadow',
+        coreDrive: 'Memahami segala kemungkinan sebelum melangkah (Risk Zero).',
+        stressMode: 'Analysis paralysis level dewa—stuck di satu pikiran berhari-hari.',
+        relPattern: 'Over-explaining motif diri sendiri krn takut disalahpahami.',
+        power: 'Deep Architecture—lo bisa liat akar masalah yang disembunyiin dunia.',
+        workStyle: 'The Auditor—lo nemuin celah yang senior lo pun nggak sadar.',
+        socialStyle: 'Tampak "tenggelam" pas diajak ngobrol santai (padahal lagi simulasi skenario).',
+        warningSign: 'Lo mulai ngerasa "mikirin" masalah itu sama dengan "nyelesaiin" masalah.',
+        superpower: 'Logic Warp—bisa narik kesimpulan jenius dari serpihan info random.',
+        challenge1: 'Ambil keputusan penting dlm waktu 30 detik hari ini.',
+        journalPrompt: 'Kapan pikiran lo bener-bener "diam" terakhir kali? Apa triggernya?',
+        microHabit: 'Tulis "Selesai" di kertas tiap kali lo udah dapet jawaban dari analisa lo.',
+        quote: 'Analisa itu peta, bukan perjalanannya.'
     },
     'numb-survivor': {
         id: 'numb-survivor',
@@ -139,7 +275,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Hidup tanpa vitalitas, lo nggak pernah bener-bener "ada" di momen ini.',
         healingTip: 'Somatic grounding: Coba ngerasain sensasi fisik kecil biar pelan-pelan "balik" ke badan.',
         color: '#71717a',
-        mbtiLogic: 'Si / Fi > Fe / Ne > Te / Se (Shadow)'
+        mbtiLogic: 'Si / Fi > Fe / Ne > Te / Se (Shadow)',
+        tagline: 'Hidup lo adalah rumah kosong yang lampunya dinyalain biar nggak disangka sepi.',
+        rarity: '11%',
+        mbti: 'ISFJ/ISTJ Shadow',
+        coreDrive: 'Menghindari rasa sakit dengan cara nggak ngerasain apapun.',
+        stressMode: 'Mati rasa total (Dissociation) pas lagi ada tekanan mental.',
+        relPattern: 'Ghosting emosional—lo ada di situ tapi jiwa lo nggak.',
+        power: 'Pain Immunity—lo bisa tahan dlm penderitaan yang bikin orang lain nyerah.',
+        workStyle: 'The Reliable Robot—ngerjain tugas rutin tanpa ngeluh tapi tanpa passion.',
+        socialStyle: 'Banyak diem, minimalis dlm ekspresi wajah (Poker face natural).',
+        warningSign: 'Lo ngerasa "hampa" itu lebih aman daripada "bahagia".',
+        superpower: 'Silent Endurance—lo punya energi cadangan yang nggak masuk akal.',
+        challenge1: 'Liat satu video sedih/senang dan biarkan diri lo beneran "ngerasa".',
+        journalPrompt: 'Apa memori pertama yang bikin lo milih buat "mati rasa"?',
+        microHabit: 'Sentuh air dingin/hangat dan fokus ke sensasinya selama 1 menit.',
+        quote: 'Ngerasain sakit itu bukti kalo lo masih hidup.'
     },
     'adaptive-chameleon': {
         id: 'adaptive-chameleon',
@@ -153,7 +304,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Identity crisis parah pas lo dipaksa buat punya pendirian sendiri.',
         healingTip: 'Ti/Fi Anchor: Cari 3 hal yang lo suka murni tanpa pengaruh orang lain.',
         color: '#10b981',
-        mbtiLogic: 'Se / Ne > Fi > Ti / Si (Shadow)'
+        mbtiLogic: 'Se / Ne > Fi > Ti / Si (Shadow)',
+        tagline: 'Lo adalah ribuan topeng yang lagi cari wajah aslinya.',
+        rarity: '20%',
+        mbti: 'ESFP/ESTP Shadow',
+        coreDrive: 'Adaptasi instan biar nggak pernah kerasa "asing" di mana pun.',
+        stressMode: 'Ganti kepribadian dlm sedetik buat nyelamatin situasi sosial.',
+        relPattern: 'Mirroring partner—lo jadi "tipe ideal" mereka sampe lo capek sendiri.',
+        power: 'Infiltration—bisa masuk ke komunitas paling tertutup dlm sekejap.',
+        workStyle: 'The Bridge—lo yang bunglon di antara semua divisi biar semua seneng.',
+        socialStyle: 'People pleaser yang sangat "pintar" dlm nyembunyiin motif asli.',
+        warningSign: 'Lo bingung mau pesen makan apa kalo nggak ada yang pesen duluan.',
+        superpower: 'Vibe Mirroring—bisa bikin orang ngerasa "nyambung" banget sama lo.',
+        challenge1: 'Pake baju yang paling lo suka hari ini tanpa peduli kata orang.',
+        journalPrompt: 'Siapa lo pas lo lagi sendirian di kamar dan lampunya mati?',
+        microHabit: 'Katakan opini jujur lo soal hal sepele (misal: "Film ini jelek") di depan forum.',
+        quote: 'Diterima dunia nggak ada gunanya kalo lo asing sama diri sendiri.'
     },
     'wounded-healer-dark': {
         id: 'wounded-healer-dark',
@@ -167,7 +333,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Burnout kronis karena lo ngerasa bertanggung jawab atas kebahagiaan dunia.',
         healingTip: 'Boundaries: Sadari kalau lo bukan pusat rehabilitasi berjalan buat semua orang.',
         color: '#14b8a6',
-        mbtiLogic: 'Fe / Ni > Ti / Se > Fi / Ne (Shadow)'
+        mbtiLogic: 'Fe / Ni > Ti / Se > Fi / Ne (Shadow)',
+        tagline: 'Lo sibuk nambal bocor di kapal orang, padahal kapal lo udah mau tenggelam.',
+        rarity: '16%',
+        mbti: 'INFJ/ENFJ Shadow',
+        coreDrive: 'Menyembuhkan dunia biar lo nggak usah nyembuhin diri sendiri.',
+        stressMode: 'Compulsive helping—makin stres lo, makin lo cari orang yg butuh bantuan.',
+        relPattern: 'Relationship "Proyek"—lo selalu cari orang yg "rusak" buat lo benerin.',
+        power: 'Emotional Surgery—lo bisa tau trauma orang cuma dari kata-katanya.',
+        workStyle: 'The Counselor—semua orang lari ke meja lo kalo ada masalah personal.',
+        socialStyle: 'Wise, nurturing, tapi sebenernya super lelah dlm kesendirian.',
+        warningSign: 'Lo ngerasa "egois" kalo lo nggak nolongin orang hari ini.',
+        superpower: 'Pattern Recognition (Trauma Edition)—lo liat luka sebelum orang itu ngerasain.',
+        challenge1: 'Tolak curhatan satu orang hari ini dan bilang lo lagi butuh istirahat.',
+        journalPrompt: 'Luka apa yang lagi lo sembunyiin di balik topeng "si penolong"?',
+        microHabit: 'Tanya "Gue butuh apa?" sebelum tanya "Lo butuh apa?" ke orang lain.',
+        quote: 'Nyelamatin dunia nggak guna kalo lo sendiri hancur.'
     },
     'shadow-worker-dark': {
         id: 'shadow-worker-dark',
@@ -181,7 +362,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Fase ini melelahkan banget, lo bisa ngerasa "berantakan" dalam waktu lama.',
         healingTip: 'Self-compassion: Jangan sampe proses healing lo malah jadi cara baru buat nyiksa diri.',
         color: '#6366f1',
-        mbtiLogic: 'Ego > Shadow Integration'
+        mbtiLogic: 'Ego > Shadow Integration',
+        tagline: 'Lagi bersih-bersih gudang hati, banyak debu tapi mulai terang.',
+        rarity: '3%',
+        mbti: 'XNXX Intermediate',
+        coreDrive: 'Menjadi versi diri yang paling utuh tanpa harus membuang sisi gelap.',
+        stressMode: 'Self-isolation yang produktif (berantem sama pikiran sendiri).',
+        relPattern: 'Eksperimental—lo lagi nyoba interaksi yang lebih jujur tapi masih kikuk.',
+        power: 'Ego Dissolution—lo bisa liat kesalahan lo tanpa harus defensif parah.',
+        workStyle: 'The Refiner—lo yang suka benerin sistem yg udah lama bobrok dlm tim.',
+        socialStyle: 'Sangat selektif, cuma mau ngobrol yang "berat" dan bermakna.',
+        warningSign: 'Lo mulai jadi terlalu serius sampe lupa caranya ketawa receh.',
+        superpower: 'Internal Honesty—lo nggak bisa bohong lagi sama diri lo sendiri.',
+        challenge1: 'Hargai satu sisi gelap lo (misal: "Gue emang ambisius") tanpa rasa malu.',
+        journalPrompt: 'Hal apa yang paling lo benci dari orang lain, yang aslinya ada di lo?',
+        microHabit: 'Catat satu "kemenangan emosional" kecil setiap malam.',
+        quote: 'Utuh bukan berarti sempurna, utuh berarti berani nerima semua.'
     },
 
     // === LIGHT ARCHETYPES (GROWTH) ===
@@ -197,7 +393,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Kadang bosenan kalau sistemnya udah terlalu stabil/rutin.',
         healingTip: 'Si-Focus: Belajar sedikit disiplin buat nyelesein project yang udah lo mulai.',
         color: '#f59e0b',
-        mbtiLogic: 'Ne > Ti > Fe > Si'
+        mbtiLogic: 'Ne > Ti > Fe > Si',
+        tagline: 'Lo nggak cuma liat masa depan, lo lagi ngebangun jalannya.',
+        rarity: '12%',
+        mbti: 'ENTP/ENFP Healthy',
+        coreDrive: 'Mengeksplorasi semua kemungkinan dan menciptakan solusi baru.',
+        stressMode: 'Mikirin terlalu banyak ide sampe lupa ngerjain yang prioritas.',
+        relPattern: 'Supportive banget dlm hal ide, partner lo ngerasa dunia itu tanpa batas.',
+        power: 'Future Mapping—lo bisa liat tren sebelum tren itu ada.',
+        workStyle: 'The Disruptor—lo yang selalu kasih ide out-of-the-box di meeting.',
+        socialStyle: 'Energetik, pinter debat, dan sangat inspiratif.',
+        warningSign: 'Lo mulai ngerasa realita itu membosankan dibanding ide lo.',
+        superpower: 'Idea Synthesis—bisa gabungin dua hal random jadi inovasi gila.',
+        challenge1: 'Selesaikan satu project yang udah lo tunda selama sebulan.',
+        journalPrompt: 'Satu ide gila apa yang beneran pengen lo wujudin tahun ini?',
+        microHabit: 'Tulis 3 ide random tiap pagi buat ngejaga kreativitas.',
+        quote: 'Masa depan milik mereka yang berani liat apa yang belum ada.'
     },
     'empathic-connector': {
         id: 'empathic-connector',
@@ -211,7 +422,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Sering lupa prioritas diri sendiri demi harmoni grup.',
         healingTip: 'Ti-Logic: Sesekali pake data objektif buat ambil keputusan, jangan cuma perasaan.',
         color: '#ec4899',
-        mbtiLogic: 'Fe > Ni > Se > Ti'
+        mbtiLogic: 'Fe > Ni > Se > Ti',
+        tagline: 'Lo adalah jembatan di atas air yang lagi bergejolak.',
+        rarity: '18%',
+        mbti: 'ENFJ/ESFJ Healthy',
+        coreDrive: 'Menciptakan harmoni dan koneksi yang bermakna antar manusia.',
+        stressMode: 'Terlalu mikirin perasaan orang sampe lo burnout sendiri.',
+        relPattern: 'The Support System—lo tempat orang "pulang" pas lagi hancur.',
+        power: 'Deep Empathy—lo bisa ngerasain emosi orang sebelum mereka cerita.',
+        workStyle: 'The Facilitator—lo yang bikin tim kerja pake hati, bukan cuma target.',
+        socialStyle: 'Warm, welcoming, dan jago banget bikin orang ngerasa "didengar".',
+        warningSign: 'Lo mulai ngerasa bersalah pas lo mau me-time.',
+        superpower: 'Emotional Resonance—bisa netralisir kemarahan dlm ruangan dlm sekejap.',
+        challenge1: 'Matikan HP dan fokus ke diri sendiri selama 3 jam hari ini.',
+        journalPrompt: 'Siapa orang yang paling banyak nyedot energi lo minggu ini?',
+        microHabit: 'Tetesin air ke muka dan tanya "Gue butuh apa?" sebelum nolong orang.',
+        quote: 'Koneksi sejati dimulai dari keberanian buat jadi diri sendiri.'
     },
     'resilient-phoenix': {
         id: 'resilient-phoenix',
@@ -225,7 +451,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Bisa terlihat kurang sensitif pas orang lain lagi butuh validasi emosi (bukan solusi).',
         healingTip: 'Ni-Vision: Sesekali pikirin dampak jangka panjang dari tindakan spontan lo.',
         color: '#f97316',
-        mbtiLogic: 'Se > Ti > Fe > Ni'
+        mbtiLogic: 'Se > Ti > Fe > Ni',
+        tagline: 'Makin lo dibakar masalah, makin terang lo bersinar.',
+        rarity: '15%',
+        mbti: 'ESTP/ESFP Healthy',
+        coreDrive: 'Bertahan dan berkembang melewati segala rintangan fisik/mental.',
+        stressMode: 'Menerjang semua masalah tanpa kenal rasa takut (seringkali ceroboh).',
+        relPattern: 'Bisa diandalkan pas krisis, nggak bakal ninggalin meski dunia hancur.',
+        power: 'Fast Recovery—lo bisa bangkit dari kegagalan dlm hitungan jam.',
+        workStyle: 'The Firefighter—lo yang dipanggil kalo ada krisis besar yang harus beres cepet.',
+        socialStyle: 'Confident, penuh energi, dan sangat "hadir" di momen sekarang.',
+        warningSign: 'Lo mulai nganggep remeh rasa sakit orang lain karena lo "kuat".',
+        superpower: 'Instant Adaptability—bisa kuasain hal baru dlm tekanan tinggi.',
+        challenge1: 'Dengerin keluhan orang selama 15 menit tanpa kasih solusi sama sekali.',
+        journalPrompt: 'Kegagalan mana yang sebenernya bikin lo jadi sekuat sekarang?',
+        microHabit: 'Push-up 5x tiap kali ngerasa stres buat buang energi negatif.',
+        quote: 'Jangan takut hancur, karena dari situ lo dibangun ulang.'
     },
     'wise-strategist': {
         id: 'wise-strategist',
@@ -239,7 +480,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Bisa terlihat dingin atau terlalu kaku kalau rencana nggak sesuai harapan.',
         healingTip: 'Se-Presence: Belajar nikmatin hari ini tanpa harus mikirin impact-nya ke masa depan.',
         color: '#3b82f6',
-        mbtiLogic: 'Ni > Te > Fi > Se'
+        mbtiLogic: 'Ni > Te > Fi > Se',
+        tagline: 'Lo nggak cuma main game, lo yang bikin aturannya.',
+        rarity: '10%',
+        mbti: 'INTJ/ENTJ Healthy',
+        coreDrive: 'Membangun sistem dan masa depan yang stabil lewat visi jangka panjang.',
+        stressMode: 'Mikirin data berlebihan pas rencana mulai meleset.',
+        relPattern: 'Supportive lewat tindakan nyata dan rencana masa depan bareng.',
+        power: 'Architectural Thinking—lo liat dunia sebagai sekumpulan sistem yg bisa di-fix.',
+        workStyle: 'The Mastermind—lo yang bikin blueprint sukses buat tim.',
+        socialStyle: 'Calm, fokus, dan hanya ngobrol kalo ada hal penting.',
+        warningSign: 'Lo mulai ngerasa orang lain itu cuma "tools" dlm rencana lo.',
+        superpower: 'Probability Sight—bisa nebak hasil akhir sebuah keputusan dngn akurasi 90%.',
+        challenge1: 'Lakukan satu hal secara spontan tanpa rencana sama sekali hari ini.',
+        journalPrompt: 'Apa rencana lo yang paling jujur kalo lo nggak takut gagal?',
+        microHabit: 'Visualisasi 5 menit tiap pagi soal tujuan besar lo.',
+        quote: 'Strategi terbaik adalah kejujuran pada diri sendiri.'
     },
     'balanced-harmonizer': {
         id: 'balanced-harmonizer',
@@ -253,7 +509,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Kadang takut sama perubahan yang terlalu drastis.',
         healingTip: 'Ne-Exploration: Coba satu hal baru yang di luar zona nyaman lo tiap bulan.',
         color: '#10b981',
-        mbtiLogic: 'Si > Fe > Ti > Ne'
+        mbtiLogic: 'Si > Fe > Ti > Ne',
+        tagline: 'Penenang badai dlm keheningan.',
+        rarity: '25%',
+        mbti: 'ISFJ/ISTJ Healthy',
+        coreDrive: 'Menjaga tradisi dan stabilitas emosional circle terdekat.',
+        stressMode: 'Milih buat diem dan mati rasa sampe situasi aman lagi.',
+        relPattern: 'The Devoted One—lo kasih kenyamanan yang nggak ada duanya.',
+        power: 'Consistency—lo adalah orang paling stabil yang pernah mereka kenal.',
+        workStyle: 'The Guardian—lo yang pastiin semua detail kecil nggak ada yang lewat.',
+        socialStyle: 'Polite, humble, dan sangat menghargai tata krama.',
+        warningSign: 'Lo mulai nolak semua ide baru cuma karena "bukan biasanya".',
+        superpower: 'Conflict Diffusion—bisa bikin orang yang berantem jadi damai dngn satu kalimat.',
+        challenge1: 'Coba rute jalan pulang yang beda atau makan di tempat baru.',
+        journalPrompt: 'Tradisi apa yang sebenernya udah nggak relevan dlm hidup lo?',
+        microHabit: 'Beresin satu sudut ruangan tiap kali pikiran lagi ruwet.',
+        quote: 'Ketenangan adalah bentuk kekuatan yang paling tinggi.'
     },
     'authentic-grounded': {
         id: 'authentic-grounded',
@@ -267,7 +538,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Bisa terlalu idealis sampe susah kompromi sama realita yang "kotor".',
         healingTip: 'Te-Action: Belajar cara "menjual" ide idealis lo biar bisa diterima secara praktis.',
         color: '#8b5cf6',
-        mbtiLogic: 'Fi > Ne > Si > Te'
+        mbtiLogic: 'Fi > Ne > Si > Te',
+        tagline: 'Lo adalah akar yang dalem dlm badai kepalsuan.',
+        rarity: '14%',
+        mbti: 'INFP/ISFP Healthy',
+        coreDrive: 'Hidup sesuai dengan nilai-nilai internal yang murni.',
+        stressMode: 'Mengisolasi diri buat lindungin "api" di dalem hati.',
+        relPattern: 'The Real One—lo nggak pernah pura-pura demi disukai orang.',
+        power: 'Value Alignment—lo bisa tau mana yg bener dlm sekejap.',
+        workStyle: 'The Artist—lo ngerjain sesuatu dngn idealisme tinggi.',
+        socialStyle: 'Introverted tapi punya "presence" yang sangat kuat.',
+        warningSign: 'Lo mulai nge-judge orang yang "fake" secara berlebihan.',
+        superpower: 'Purity Radar—lo bisa ngerasain siapa yang tulus dlm satu detik.',
+        challenge1: 'Coba kompromi dlm satu hal kecil yang nggak terlalu prinsipil.',
+        journalPrompt: 'Kapan terakhir kali lo ngelakuin sesuatu murni buat diri lo sendiri?',
+        microHabit: 'Ucapin "Ini gue" tiap kali lo berani ngomong jujur.',
+        quote: 'Jadilah dirimu sendiri, karena yang lain udah diambil.'
     },
     'joyful-catalyst': {
         id: 'joyful-catalyst',
@@ -281,7 +567,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Kadang dianggap kurang serius pas situasi emang lagi butuh kedalaman.',
         healingTip: 'Ni-Reflection: Sediain waktu buat diem dan mikir dalem, nggak usah ceria terus.',
         color: '#fbbf24',
-        mbtiLogic: 'Se > Fi > Te > Ni'
+        mbtiLogic: 'Se > Fi > Te > Ni',
+        tagline: 'Lo adalah kembang api yang ngebakar kegelapan dunia.',
+        rarity: '22%',
+        mbti: 'ESFP/ENFP Healthy',
+        coreDrive: 'Menyebarkan energi positif dan kegembiraan ke semua orang.',
+        stressMode: 'Berusaha tetep ceria meski hati hancur (toxic positivity ke diri sendiri).',
+        relPattern: 'Bikin hidup terasa ringan, selalu punya rencana seru buat weekend.',
+        power: 'Mood Shift—lo bisa bikin orang ketawa meski mereka lagi nangis.',
+        workStyle: 'The Energizer—lo yang bikin kantor nggak bosenin lewat lawakan lo.',
+        socialStyle: 'The Life of the Party—semua orang nyari lo kalo mau seru-seruan.',
+        warningSign: 'Lo mulai takut orang nggak bakal sayang lo kalo lo lagi "sedih".',
+        superpower: 'Infectious Optimism—harapan lo bisa "nular" ke orang paling pesimis sekalipun.',
+        challenge1: 'Biarkan diri lo ngerasain sedih selama 1 jam tanpa harus dibecandain.',
+        journalPrompt: 'Kebahagiaan siapa yang sebenernya lagi lo "akting"-in?',
+        microHabit: 'Ketawa lepas minimal sekali sehari, meski cuma nonton video lucu.',
+        quote: 'Bahagia itu pilihan, dan lo adalah masternya.'
     },
     'quiet-powerhouse': {
         id: 'quiet-powerhouse',
@@ -295,7 +596,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Sangat keras sama diri sendiri kalau gagal dikit aja.',
         healingTip: 'Ne-Spontaneity: Belajar buat sesekali "berantakan" dan nggak teratur.',
         color: '#1f2937',
-        mbtiLogic: 'Si > Te > Fi > Ne'
+        mbtiLogic: 'Si > Te > Fi > Ne',
+        tagline: 'Tenang dlm diam, mematikan dlm eksekusi.',
+        rarity: '9%',
+        mbti: 'ISTJ/INTJ Secure',
+        coreDrive: 'Mencapai hasil maksimal lewat disiplin dan fokus tanpa gangguan.',
+        stressMode: 'Mengerjakan semuanya sendirian krn nggak percaya sama orang lain.',
+        relPattern: 'The Rock—lo adalah tempat bersandar yang paling nggak bakal goyah.',
+        power: 'Extreme Focus—lo bisa blokir seisi dunia buat nyelesein satu tugas.',
+        workStyle: 'The Finisher—lo yang bungkus semua rencana jadi hasil nyata.',
+        socialStyle: 'Minimalis, tenang, tapi setiap kata-katanya berbobot.',
+        warningSign: 'Lo ngerasa istirahat itu adalah sebuah dosa besar.',
+        superpower: 'Unstoppable Momentum—sekali lo gerak, nggak ada yg bisa nahan.',
+        challenge1: 'Sengaja nggak ngerjain satu tugas hari ini dan santai sebentar.',
+        journalPrompt: 'Siapa lo kalo lo nggak lagi "berguna" atau "produktif"?',
+        microHabit: 'Tarik napas panjang tiap kali lo berasa pengen "ngebut" ngerjain sesuatu.',
+        quote: 'Hasil nggak pernah bohong soal kerja keras.'
     },
     'insightful-mentor': {
         id: 'insightful-mentor',
@@ -309,7 +625,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Kadang ngerasa kesepian karena ngerasa "liat terlalu banyak/dalem".',
         healingTip: 'Se-Grounding: Nikmatin hal-hal simpel kayak makanan enak tanpa harus ada "makna" di baliknya.',
         color: '#6366f1',
-        mbtiLogic: 'Ni > Fe > Ti > Se'
+        mbtiLogic: 'Ni > Fe > Ti > Se',
+        tagline: 'Lo liat cahaya dlm diri orang yang mereka sendiri belum tau.',
+        rarity: '7%',
+        mbti: 'INFJ/ENFJ Wise',
+        coreDrive: 'Membantu orang lain nemuin dan ngembangin potensi terbaik mereka.',
+        stressMode: 'Terlalu dalam mikirin masalah orang sampe lupa masalah sendiri.',
+        relPattern: 'The Catalyst—lo bikin siapa pun yg deket lo jadi pengen lebih baik.',
+        power: 'Potential Detection—lo tau "berlian" meski masih ketutup lumpur.',
+        workStyle: 'The Developer—lo yang suka ngorbitin orang hebat dlm organisasi.',
+        socialStyle: 'Wise, tenang, dan punya aura "pelindung".',
+        warningSign: 'Lo mulai ngerasa hidup lo cuma buat orang lain doang.',
+        superpower: 'Visionary Guidance—bisa arahin hidup orang cuma lewat satu diskusi.',
+        challenge1: 'Minta advice ke orang lain hari ini, jangan cuma lo yg kasih advice.',
+        journalPrompt: 'Apa "potensi diri lo" yang paling sering lo skip demi nemenin orang lain?',
+        microHabit: 'Ucapin "Gue bangga sama lo" ke diri sendiri di depan kaca.',
+        quote: 'Tugas lo bukan kasih cahaya, tapi bantu mereka temuin saklarnya.'
     },
     'adaptive-innovator': {
         id: 'adaptive-innovator',
@@ -323,7 +654,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Bisa terlalu fokus ke "sistem/solusi" sampe lupa validasi emosi partner.',
         healingTip: 'Fi-Empathy: Belajar dengerin keluhan tanpa langsung kasih 10 list solusi.',
         color: '#06b6d4',
-        mbtiLogic: 'Ne > Ti > Fe > Si'
+        mbtiLogic: 'Ne > Ti > Fe > Si',
+        tagline: 'Kalo pintunya dikunci, lo bakal masuk lewat ventilasi atau bikin pintu baru.',
+        rarity: '13%',
+        mbti: 'ENTP/INTP Healthy',
+        coreDrive: 'Menyelesaikan masalah lewat cara-cara yang belum pernah ada.',
+        stressMode: 'Mikirin terlalu banyak teknis sampe lupa nanya "Kenapa kita butuh ini?".',
+        relPattern: 'The Tech-Support of Life—lo selalu punya cara benerin apa pun yg rusak.',
+        power: 'Lateral Thinking—lo bisa gabungin dua info nggak nyambung jadi solusi.',
+        workStyle: 'The Hacking Mindset—lo yang paling cepet trial-and-error sampe ketemu jalannya.',
+        socialStyle: 'Smart, agak eksentrik, dan suka ngajak debat yang menantang.',
+        warningSign: 'Lo mulai ngerasa semua masalah emosi bisa "di-coding" solusinya.',
+        superpower: 'Chaos Mastery—makin berantakan situasinya, makin jernih otak lo.',
+        challenge1: 'Nonton film drama sedih dan coba fokus ke perasaannya, bukan plot-hole nya.',
+        journalPrompt: 'Masalah apa yang sebenernya lagi lo hindari lewat "innovation" lo?',
+        microHabit: 'Tanya "Gimana perasaan lo?" tiap kali lo mau kasih solusi ke orang.',
+        quote: 'Problem bukan tembok, tapi bahan baku buat bangunan baru.'
     },
     'radiant-nurturer': {
         id: 'radiant-nurturer',
@@ -337,7 +683,22 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Over-protectiveness yang bikin orang kadang ngerasa terkekang.',
         healingTip: 'Ne-Challenge: Biarkan orang yang lo sayang buat salah dan belajar sendiri.',
         color: '#fb7185',
-        mbtiLogic: 'Si > Fe > Ti > Ne'
+        mbtiLogic: 'Si > Fe > Ti > Ne',
+        tagline: 'Tempat berteduh paling anget pas dunia lagi dingin-dinginnya.',
+        rarity: '21%',
+        mbti: 'ISFJ/ESFJ Secure',
+        coreDrive: 'Menyediakan kenyamanan, rasa aman, dan kasih sayang buat circle terdekat.',
+        stressMode: 'Meresap kesedihan semua orang sampe lo ngerasa sesek sendiri.',
+        relPattern: 'The Caregiver—lo pastiin semua orang di sekitar lo udah makan dan sehat.',
+        power: 'Instinctive Nurturing—lo tau apa yang bikin orang tenang tanpa mereka minta.',
+        workStyle: 'The Mother/Father Figure—lo yang bikin kantor kerasa kayak rumah.',
+        socialStyle: 'Kind, gentle, dan selalu punya kata-kata yang menenangkan.',
+        warningSign: 'Lo mulai ngerasa nggak berharga kalo nggak ada orang yang lo urusin.',
+        superpower: 'Absolute Warmth—hadir lo aja udah bisa ngurangin stres orang lain.',
+        challenge1: 'Biarkan satu orang terdekat lo bikin kesalahan tanpa lo "peringatin".',
+        journalPrompt: 'Kapan terakhir kali lo beneran "manjain" diri lo sendiri?',
+        microHabit: 'Minum teh anget sambil bilang "Gue udah cukup nolong hari ini".',
+        quote: 'Kasih sayang itu nggak pernah sia-sia.'
     },
     'evolving-sage': {
         id: 'evolving-sage',
@@ -351,6 +712,21 @@ export const archetypes: Record<string, Archetype> = {
         weakness: 'Kadang terlalu "in your head" sampe lupa makan atau urusan domestik.',
         healingTip: 'Se-Activity: Rutin olahraga biar otak lo yang gila itu ada waktu buat istirahat.',
         color: '#4f46e5',
-        mbtiLogic: 'Ti / Ni > Ne / Te > Fe / Si'
-    }
+        mbtiLogic: 'Ti / Ni > Ne / Te > Fe / Si',
+        tagline: 'Pengejar fajar kebijaksanaan dlm labirin pengetahuan.',
+        rarity: '4%',
+        mbti: 'INTP/INFJ Master',
+        coreDrive: 'Memahami esensi alam semesta dan berbagi kebijaksanaan itu.',
+        stressMode: 'Makin stres lo, makin lo cari buku atau data buat pelarian.',
+        relPattern: 'The Teacher—lo selalu punya insight baru yg bikin partner lo tercerahkan.',
+        power: 'Wisdom Compounding—lo bisa kaitkan ilmu filsafat sama cara goreng telur.',
+        workStyle: 'The Scholar—lo adalah narasumber utama buat urusan konseptual yg berat.',
+        socialStyle: 'Deep, puitis dlm bicara, dan sangat menghargai privasi.',
+        warningSign: 'Lo mulai jadi arogan dngn nganggap orang lain itu "cetek".',
+        superpower: 'Clarity of Thought—lo bisa sederhanain hal paling rumit di dunia.',
+        challenge1: 'Main game receh atau nonton acara gak penting tanpa mikir filosofinya.',
+        journalPrompt: 'Apakah pengetahuan lo udah bikin lo jadi orang yang lebih baik, atau cuma lebih pinter?',
+        microHabit: 'Selesaikan satu bab buku dan tulis satu aksi nyata dari situ.',
+        quote: 'Belajar adalah perjalanannya, kebijaksanaan adalah detaknya.'
+    },
 };

@@ -60,7 +60,7 @@ const QuizPage: React.FC = () => {
         fetch('/api/send-email', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, archetype })
+            body: JSON.stringify({ name, email, archetype, scores: totalScores })
         }).catch(err => {
             console.error("Email sending failed", err);
             // alert("Email gagal dikirim. Kalo ngetes lokal emang nggak jalan, harus di Vercel.");
