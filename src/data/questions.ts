@@ -336,5 +336,55 @@ export const questions: Question[] = [
             { id: '30C', text: 'Evaluasi bagian mana yg paling krusial dlm proses ini', scores: { selfAwareness: 6, resilience: 6, optimism: 5 } },
             { id: '30D', text: 'Udah ngerasa "utuh" & siap hadapin next challenge', scores: { growth: 6, emotionalIntelligence: 5, attachment: { secure: 5 } } }
         ]
+    },
+    {
+        id: 31,
+        question: "Lo lagi burnout kerja sampe ngerasa kosong. Reaksi lo?",
+        options: [
+            { id: '31A', text: 'Set boundary tegas, "Hari ini gue off total"', scores: { balance: 7, emotionalIntelligence: 6, resilience: 5 } },
+            { id: '31B', text: 'Analisa dulu, "Kenapa gue bisa capek sampe segini?"', scores: { selfAwareness: 7, growth: 6, optimism: 5 } },
+            { id: '31C', text: 'Chat temen buat recharge bareng', scores: { empathy: 6, attachment: { secure: 6 }, balance: 5 } },
+            { id: '31D', text: '"Besok pasti lebih baik, gue istirahat dulu"', scores: { optimism: 7, resilience: 6, growth: 5 } }
+        ]
+    },
+    {
+        id: 32,
+        question: "Meeting tim berantakan, semua pada ribut. Lo?",
+        options: [
+            { id: '32A', text: '"Oke guys, apa yang bisa kita improve dari ini?"', scores: { growth: 7, selfAwareness: 6, resilience: 5 } },
+            { id: '32B', text: 'Mediasi konflik, dengerin semua pihak', scores: { empathy: 7, attachment: { secure: 6 }, balance: 5 } },
+            { id: '32C', text: 'Fokus ke solusi praktis, skip drama', scores: { balance: 6, optimism: 6, emotionalIntelligence: 5 } },
+            { id: '32D', text: '"Lesson learned buat next meeting nih"', scores: { resilience: 7, growth: 6, selfAwareness: 5 } }
+        ]
+    },
+    {
+        id: 33,
+        question: "Lo tolak request temen karena lagi overload. Perasaan lo?",
+        options: [
+            { id: '33A', text: '"Boundaries itu penting buat kesehatan mental gue"', scores: { balance: 7, attachment: { secure: 6 }, emotionalIntelligence: 6 } },
+            { id: '33B', text: '"Hubungan kita tetep aman kok, dia pasti ngerti"', scores: { empathy: 6, resilience: 6, growth: 5 } },
+            { id: '33C', text: 'Reflect, "Apa gue udah jelasin dengan baik?"', scores: { selfAwareness: 7, optimism: 6, balance: 5 } },
+            { id: '33D', text: '"Gue pilih diri gue dulu kali ini"', scores: { growth: 6, resilience: 7, attachment: { secure: 5 } } }
+        ]
+    },
+    {
+        id: 34,
+        question: "Lo belajar skill baru tapi susah banget nangkepnya. Lo?",
+        options: [
+            { id: '34A', text: '"Brain gue lagi adaptasi, wajar kok lambat"', scores: { growth: 7, optimism: 7, resilience: 5 } },
+            { id: '34B', text: 'Cari mentor atau temen yang udah jago', scores: { empathy: 6, attachment: { secure: 6 }, selfAwareness: 6 } },
+            { id: '34C', text: 'Break jadi step-step kecil yang achievable', scores: { balance: 7, emotionalIntelligence: 5, growth: 5 } },
+            { id: '34D', text: 'Celebrate tiap progress kecil yang gue dapet', scores: { optimism: 6, resilience: 6, attachment: { secure: 5 } } }
+        ]
+    },
+    {
+        id: 35,
+        question: "Bos kasih feedback keras di depan tim. Reaksi lo?",
+        options: [
+            { id: '35A', text: '"Oke, apa truth di balik kritiknya?"', scores: { selfAwareness: 7, growth: 6, resilience: 6 } },
+            { id: '35B', text: 'Diskusi empat mata buat klarifikasi', scores: { empathy: 6, attachment: { secure: 7 }, balance: 5 } },
+            { id: '35C', text: 'Langsung bikin action plan buat improve', scores: { growth: 7, optimism: 6, emotionalIntelligence: 5 } },
+            { id: '35D', text: 'Self-compassion dulu, baru mikir solusi', scores: { balance: 6, resilience: 6, attachment: { secure: 5 } } }
+        ]
     }
 ];

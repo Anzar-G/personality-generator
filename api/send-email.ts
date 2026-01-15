@@ -78,7 +78,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                         <td style="padding: 20px 40px 40px 40px;">
                             <p style="font-size: 16px; line-height: 1.6; color: #94a3b8; margin: 0;">
                                 Halo <strong>${name}</strong>,<br><br>
-                                Analisis kepribadian lo dari 30 pertanyaan kuis tadi udah selesai diproses. Dossier ini bakal ngebuka sisi terdalam dari archetype lo.
+                                Analisis kepribadian lo dari 35 pertanyaan kuis tadi udah selesai diproses. Dossier ini bakal ngebuka sisi terdalam dari archetype lo.
                                 <br><br>
                                 Cek detail skor dan analisisnya di bawah:
                             </p>

@@ -50,8 +50,9 @@ export const calculateScores = (answers: Record<number, Scores>): Scores => {
 };
 
 export const determineArchetype = (scores: Scores): string => {
-    // Normalization to 0-100 (Based on 15 questions per category, max ~90)
-    const norm = (val: number | undefined) => Math.min(((val || 0) / 90) * 100, 100);
+    // Normalization to 0-100 (Based on 35 questions, max 7 points per answer)
+    // Average max score per metric: ~122.5 (35 × 7 ÷ 2)
+    const norm = (val: number | undefined) => Math.min(((val || 0) / 122.5) * 100, 100);
 
     const att = scores.attachment || { secure: 0, anxious: 0, avoidant: 0, fearfulAvoidant: 0 };
     const tra = scores.trauma || { fight: 0, flight: 0, freeze: 0, fawn: 0 };
@@ -86,17 +87,19 @@ export const determineArchetype = (scores: Scores): string => {
     // PATH SELECTION: Light or Dark?
     const path = lightAvg > darkAvg ? 'light' : 'dark';
 
-    // === PRIORITY SYSTEM ===
+    // === SIMPLIFIED TIER SYSTEM (2 Tiers per Path) ===
     let allowedArchetypes: string[] = [];
 
     if (path === 'dark') {
-        // Dark Path - Tiers based on Dark Triad and Emotional Health
-        if (stats.darkTriad > 65) {
-            allowedArchetypes = ['emotional-manipulator', 'calculated-detacher', 'adaptive-chameleon', 'shadow-worker-dark'];
-        } else if (stats.emoHealth < 40) {
-            allowedArchetypes = ['self-saboteur', 'chaotic-empath', 'numb-survivor', 'overthinking-analyzer', 'silent-observer'];
+        // Dark Path - Specialized vs General
+        if (stats.darkTriad > 60 || stats.emoHealth < 35) {
+            // Specialized: High shadow or low emotional health
+            allowedArchetypes = [
+                'emotional-manipulator', 'calculated-detacher', 'self-saboteur',
+                'numb-survivor', 'overthinking-analyzer', 'shadow-worker-dark'
+            ];
         } else {
-            // General inclusion for balanced dark stats
+            // General: All dark archetypes compete
             allowedArchetypes = [
                 'emotional-manipulator', 'silent-observer', 'integrated-self-dark', 'self-saboteur',
                 'stoic-protector', 'chaotic-empath', 'calculated-detacher', 'overthinking-analyzer',
@@ -104,12 +107,15 @@ export const determineArchetype = (scores: Scores): string => {
             ];
         }
     } else {
-        // Light Path - Tiers based on Growth and Resilience
-        if (stats.growth > 75 && stats.sa > 75) {
-            allowedArchetypes = ['visionary-trailblazer', 'wise-strategist', 'evolving-sage', 'quiet-powerhouse'];
-        } else if (stats.resil > 75) {
-            allowedArchetypes = ['resilient-phoenix', 'adaptive-innovator', 'authentic-grounded', 'insightful-mentor'];
+        // Light Path - Specialized vs General
+        if (stats.growth > 70 || stats.bal > 70) {
+            // Specialized: High growth or balance
+            allowedArchetypes = [
+                'visionary-trailblazer', 'wise-strategist', 'balanced-harmonizer',
+                'evolving-sage', 'adaptive-innovator', 'quiet-powerhouse'
+            ];
         } else {
+            // General: All light archetypes compete
             allowedArchetypes = [
                 'visionary-trailblazer', 'empathic-connector', 'resilient-phoenix', 'wise-strategist',
                 'balanced-harmonizer', 'authentic-grounded', 'joyful-catalyst', 'quiet-powerhouse',
@@ -118,37 +124,35 @@ export const determineArchetype = (scores: Scores): string => {
         }
     }
 
-    // === SCORING LOGIC ===
-    // Every archetype has a formula based on their core psychological markers.
-    // Multipliers are balanced to ensure no single archetype dominates.
+    // === REBALANCED SCORING FORMULAS (All coefficients 1.0-2.0) ===
     const archetypeScores = [
         // --- DARK ARCHETYPES (12) ---
-        { id: 'emotional-manipulator', score: (stats.darkTriad * 1.8) + (stats.fawn * 1.5) - stats.secure },
-        { id: 'silent-observer', score: (stats.avoidant * 1.8) + (stats.freeze * 1.2) + (stats.bal * 0.5) },
-        { id: 'integrated-self-dark', score: (stats.secure * 1.8) + (stats.darkTriad * 1.2) + (stats.sa * 0.5) },
-        { id: 'self-saboteur', score: (stats.anxious * 1.8) + (stats.fight * 1.2) - stats.resil },
-        { id: 'stoic-protector', score: (stats.avoidant * 1.5) + (stats.resil * 1.5) + (stats.freeze * 1.0) },
-        { id: 'chaotic-empath', score: (stats.anxious * 1.5) + (stats.emp * 1.5) + (stats.fawn * 1.0) },
-        { id: 'calculated-detacher', score: (stats.darkTriad * 1.5) + (stats.avoidant * 1.5) + (stats.ei * 0.5) },
-        { id: 'overthinking-analyzer', score: (stats.anxious * 1.2) + (stats.freeze * 1.2) + (stats.sa * 1.5) },
-        { id: 'numb-survivor', score: (stats.freeze * 1.8) + (stats.flight * 1.2) - stats.opt },
-        { id: 'adaptive-chameleon', score: (stats.fawn * 1.8) + (stats.darkTriad * 1.0) + (stats.growth * 0.5) },
-        { id: 'wounded-healer-dark', score: (stats.emp * 1.8) + (stats.resil * 1.2) + (stats.anxious * 0.5) },
-        { id: 'shadow-worker-dark', score: (stats.sa * 1.8) + (stats.darkTriad * 1.2) + (stats.growth * 1.0) },
+        { id: 'emotional-manipulator', score: (stats.darkTriad * 1.7) + (stats.fawn * 1.4) + (stats.ei * 0.8) },
+        { id: 'silent-observer', score: (stats.avoidant * 1.6) + (stats.freeze * 1.3) + (stats.sa * 0.9) },
+        { id: 'integrated-self-dark', score: (stats.secure * 1.5) + (stats.darkTriad * 1.3) + (stats.sa * 1.2) },
+        { id: 'self-saboteur', score: (stats.anxious * 1.6) + (stats.fight * 1.3) + (100 - stats.resil) * 0.8 },
+        { id: 'stoic-protector', score: (stats.avoidant * 1.4) + (stats.resil * 1.4) + (stats.freeze * 1.2) },
+        { id: 'chaotic-empath', score: (stats.anxious * 1.4) + (stats.emp * 1.5) + (stats.fawn * 1.1) },
+        { id: 'calculated-detacher', score: (stats.darkTriad * 1.5) + (stats.avoidant * 1.4) + (stats.ei * 1.0) },
+        { id: 'overthinking-analyzer', score: (stats.anxious * 1.3) + (stats.freeze * 1.2) + (stats.sa * 1.4) },
+        { id: 'numb-survivor', score: (stats.freeze * 1.7) + (stats.flight * 1.3) + (100 - stats.opt) * 0.8 },
+        { id: 'adaptive-chameleon', score: (stats.fawn * 1.7) + (stats.darkTriad * 1.1) + (stats.ei * 1.0) },
+        { id: 'wounded-healer-dark', score: (stats.emp * 1.6) + (stats.anxious * 1.2) + (stats.resil * 1.2) },
+        { id: 'shadow-worker-dark', score: (stats.sa * 1.6) + (stats.darkTriad * 1.3) + (stats.growth * 1.1) },
 
         // --- LIGHT ARCHETYPES (12) ---
-        { id: 'visionary-trailblazer', score: (stats.growth * 1.8) + (stats.opt * 1.5) + (stats.resil * 0.5) },
-        { id: 'empathic-connector', score: (stats.emp * 1.8) + (stats.secure * 1.5) + (stats.ei * 0.5) },
-        { id: 'resilient-phoenix', score: (stats.resil * 1.8) + (stats.growth * 1.2) + (stats.opt * 1.0) },
-        { id: 'wise-strategist', score: (stats.sa * 1.8) + (stats.bal * 1.2) + (stats.ei * 1.0) },
-        { id: 'balanced-harmonizer', score: (stats.bal * 1.8) + (stats.ei * 1.2) + (stats.secure * 1.0) },
-        { id: 'authentic-grounded', score: (stats.sa * 1.5) + (stats.secure * 1.5) + (stats.bal * 1.0) },
-        { id: 'joyful-catalyst', score: (stats.opt * 1.8) + (stats.ei * 1.2) + (stats.emp * 1.0) },
-        { id: 'quiet-powerhouse', score: (stats.growth * 1.5) + (stats.resil * 1.5) + (stats.sa * 1.0) },
-        { id: 'insightful-mentor', score: (stats.emp * 1.5) + (stats.sa * 1.5) + (stats.ei * 1.0) },
-        { id: 'adaptive-innovator', score: (stats.growth * 1.8) + (stats.bal * 1.2) + (stats.opt * 0.5) },
-        { id: 'radiant-nurturer', score: (stats.emp * 1.8) + (stats.bal * 1.2) + (stats.secure * 0.5) },
-        { id: 'evolving-sage', score: (stats.growth * 2.0) + (stats.sa * 1.5) - stats.darkTriad },
+        { id: 'visionary-trailblazer', score: (stats.growth * 1.7) + (stats.opt * 1.5) + (stats.resil * 1.0) },
+        { id: 'empathic-connector', score: (stats.emp * 1.7) + (stats.secure * 1.5) + (stats.ei * 1.0) },
+        { id: 'resilient-phoenix', score: (stats.resil * 1.7) + (stats.growth * 1.4) + (stats.opt * 1.1) },
+        { id: 'wise-strategist', score: (stats.sa * 1.7) + (stats.bal * 1.4) + (stats.ei * 1.1) },
+        { id: 'balanced-harmonizer', score: (stats.bal * 1.8) + (stats.ei * 1.4) + (stats.secure * 1.0) },
+        { id: 'authentic-grounded', score: (stats.sa * 1.5) + (stats.secure * 1.5) + (stats.bal * 1.2) },
+        { id: 'joyful-catalyst', score: (stats.opt * 1.7) + (stats.ei * 1.3) + (stats.emp * 1.2) },
+        { id: 'quiet-powerhouse', score: (stats.growth * 1.5) + (stats.resil * 1.5) + (stats.sa * 1.2) },
+        { id: 'insightful-mentor', score: (stats.emp * 1.5) + (stats.sa * 1.5) + (stats.ei * 1.2) },
+        { id: 'adaptive-innovator', score: (stats.growth * 1.7) + (stats.bal * 1.4) + (stats.opt * 1.1) },
+        { id: 'radiant-nurturer', score: (stats.emp * 1.7) + (stats.bal * 1.3) + (stats.secure * 1.1) },
+        { id: 'evolving-sage', score: (stats.growth * 1.8) + (stats.sa * 1.6) + (stats.bal * 1.0) },
     ];
 
     // Filter candidates based on Path and Tier
