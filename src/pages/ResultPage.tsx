@@ -64,15 +64,25 @@ export const ResultPage = () => {
     useEffect(() => {
         if (userData && archetype) {
             const saveData = async () => {
-                const { error } = await supabase
+                // 1. Simpan Lead (Nama, Email, Archetype)
+                const { error: leadsError } = await supabase
                     .from('leads')
                     .insert([{
                         name: userData.name,
                         email: userData.email,
+                        archetype: archetype.name
+                    }]);
+                if (leadsError) console.error('Error saving to leads:', leadsError);
+
+                // 2. Simpan Hasil Kuis Lengkap (Nama, Archetype, Scores)
+                const { error: resultsError } = await supabase
+                    .from('quiz_results')
+                    .insert([{
+                        name: userData.name,
                         archetype: archetype.name,
                         scores: userData.scores
                     }]);
-                if (error) console.error('Error saving result:', error);
+                if (resultsError) console.error('Error saving to quiz_results:', resultsError);
             };
             saveData();
         }
