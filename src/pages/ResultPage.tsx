@@ -72,17 +72,23 @@ export const ResultPage = () => {
                         email: userData.email,
                         archetype: archetype.name
                     }]);
-                if (leadsError) console.error('Error saving to leads:', leadsError);
+                if (leadsError) {
+                    console.error('Error saving to leads:', leadsError);
+                    alert(`Gagal simpan ke leads: ${leadsError.message}`);
+                }
 
                 // 2. Simpan Hasil Kuis Lengkap (Nama, Archetype, Scores)
                 const { error: resultsError } = await supabase
-                    .from('quiz_results')
+                    .from('quiz_result')
                     .insert([{
                         name: userData.name,
                         archetype: archetype.name,
                         scores: userData.scores
                     }]);
-                if (resultsError) console.error('Error saving to quiz_results:', resultsError);
+                if (resultsError) {
+                    console.error('Error saving to quiz_result:', resultsError);
+                    alert(`Gagal simpan skor ke quiz_result: ${resultsError.message}`);
+                }
             };
             saveData();
         }

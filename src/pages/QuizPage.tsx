@@ -61,7 +61,10 @@ const QuizPage: React.FC = () => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, email, archetype })
-        }).catch(err => console.error("Email sending failed", err));
+        }).catch(err => {
+            console.error("Email sending failed", err);
+            // alert("Email gagal dikirim. Kalo ngetes lokal emang nggak jalan, harus di Vercel.");
+        });
 
         navigate(`/result/${archetypeId}?d=${encodedPayload}`);
     };

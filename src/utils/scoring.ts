@@ -90,12 +90,13 @@ export const determineArchetype = (scores: Scores): string => {
     let allowedArchetypes: string[] = [];
 
     if (path === 'dark') {
-        // TIER 1: HIGH DARK TRIAD (> 65%)
+        // Dark Path - Tiers based on Dark Triad and Emotional Health
         if (stats.darkTriad > 65) {
-            allowedArchetypes = ['emotional-manipulator', 'calculated-detacher', 'adaptive-chameleon', 'stoic-protector'];
+            allowedArchetypes = ['emotional-manipulator', 'calculated-detacher', 'adaptive-chameleon', 'shadow-worker-dark'];
         } else if (stats.emoHealth < 40) {
-            allowedArchetypes = ['self-saboteur', 'chaotic-empath', 'numb-survivor', 'overthinking-analyzer', 'emotional-manipulator'];
+            allowedArchetypes = ['self-saboteur', 'chaotic-empath', 'numb-survivor', 'overthinking-analyzer', 'silent-observer'];
         } else {
+            // General inclusion for balanced dark stats
             allowedArchetypes = [
                 'emotional-manipulator', 'silent-observer', 'integrated-self-dark', 'self-saboteur',
                 'stoic-protector', 'chaotic-empath', 'calculated-detacher', 'overthinking-analyzer',
@@ -104,10 +105,10 @@ export const determineArchetype = (scores: Scores): string => {
         }
     } else {
         // Light Path - Tiers based on Growth and Resilience
-        if (stats.growth > 70 && stats.sa > 70) {
-            allowedArchetypes = ['visionary-trailblazer', 'wise-strategist', 'insightful-mentor', 'evolving-sage'];
-        } else if (stats.resil < 40) {
-            allowedArchetypes = ['balanced-harmonizer', 'radiant-nurturer', 'authentic-grounded', 'joyful-catalyst'];
+        if (stats.growth > 75 && stats.sa > 75) {
+            allowedArchetypes = ['visionary-trailblazer', 'wise-strategist', 'evolving-sage', 'quiet-powerhouse'];
+        } else if (stats.resil > 75) {
+            allowedArchetypes = ['resilient-phoenix', 'adaptive-innovator', 'authentic-grounded', 'insightful-mentor'];
         } else {
             allowedArchetypes = [
                 'visionary-trailblazer', 'empathic-connector', 'resilient-phoenix', 'wise-strategist',
@@ -118,33 +119,36 @@ export const determineArchetype = (scores: Scores): string => {
     }
 
     // === SCORING LOGIC ===
+    // Every archetype has a formula based on their core psychological markers.
+    // Multipliers are balanced to ensure no single archetype dominates.
     const archetypeScores = [
-        // Dark
-        { id: 'emotional-manipulator', score: (stats.darkTriad * 2) + (stats.anxious * 1.5) - stats.secure },
-        { id: 'silent-observer', score: (stats.avoidant * 2) + Math.min(stats.emoHealth, 80) - stats.anxious },
-        { id: 'integrated-self-dark', score: (stats.secure * 2) + (stats.emoHealth * 1.5) - stats.darkTriad },
-        { id: 'self-saboteur', score: (stats.anxious * 1.5) + Math.max(stats.fight, stats.fawn) * 1.5 - stats.emoHealth },
-        { id: 'stoic-protector', score: (stats.avoidant * 1.5) + Math.max(stats.flight, stats.freeze) * 1.5 },
-        { id: 'chaotic-empath', score: (stats.anxious * 2) + (stats.fawn * 2) - stats.secure },
-        { id: 'calculated-detacher', score: (stats.avoidant * 1.5) + (stats.darkTriad * 1.5) - stats.anxious },
-        { id: 'overthinking-analyzer', score: (stats.anxious * 1.5) + (stats.freeze * 2) + (stats.emoHealth * 0.5) },
-        { id: 'numb-survivor', score: Math.max(stats.freeze, stats.flight) * 2 - stats.emoHealth },
-        { id: 'adaptive-chameleon', score: (stats.fawn * 2) + stats.darkTriad - stats.secure },
-        { id: 'wounded-healer-dark', score: (stats.secure * 1.5) + (stats.emoHealth * 1.5) + (stats.fawn * 0.5) },
-        { id: 'shadow-worker-dark', score: stats.darkTriad + stats.emoHealth + stats.secure },
-        // Light
-        { id: 'visionary-trailblazer', score: (stats.opt * 2) + (stats.growth * 2) + stats.sa },
-        { id: 'empathic-connector', score: (stats.emp * 2) + (stats.secure * 2) + stats.growth },
-        { id: 'resilient-phoenix', score: (stats.resil * 2) + (stats.opt * 2) + stats.growth },
-        { id: 'wise-strategist', score: (stats.sa * 2) + (stats.growth * 2) + stats.opt },
-        { id: 'balanced-harmonizer', score: (stats.bal * 2) + (stats.secure * 2) + stats.emp },
-        { id: 'authentic-grounded', score: (stats.opt * 2) + (stats.sa * 2) + stats.bal },
-        { id: 'joyful-catalyst', score: (stats.emp * 2) + (stats.resil * 2) + stats.opt },
-        { id: 'quiet-powerhouse', score: (stats.resil * 2) + (stats.growth * 2) + stats.bal },
-        { id: 'insightful-mentor', score: (stats.sa * 2) + (stats.emp * 2) + stats.growth },
-        { id: 'adaptive-innovator', score: (stats.opt * 2) + (stats.bal * 2) + stats.growth },
-        { id: 'radiant-nurturer', score: (stats.emp * 2) + (stats.secure * 2) + stats.bal },
-        { id: 'evolving-sage', score: (stats.growth * 2) + (stats.sa * 2) + stats.opt },
+        // --- DARK ARCHETYPES (12) ---
+        { id: 'emotional-manipulator', score: (stats.darkTriad * 1.8) + (stats.fawn * 1.5) - stats.secure },
+        { id: 'silent-observer', score: (stats.avoidant * 1.8) + (stats.freeze * 1.2) + (stats.bal * 0.5) },
+        { id: 'integrated-self-dark', score: (stats.secure * 1.8) + (stats.darkTriad * 1.2) + (stats.sa * 0.5) },
+        { id: 'self-saboteur', score: (stats.anxious * 1.8) + (stats.fight * 1.2) - stats.resil },
+        { id: 'stoic-protector', score: (stats.avoidant * 1.5) + (stats.resil * 1.5) + (stats.freeze * 1.0) },
+        { id: 'chaotic-empath', score: (stats.anxious * 1.5) + (stats.emp * 1.5) + (stats.fawn * 1.0) },
+        { id: 'calculated-detacher', score: (stats.darkTriad * 1.5) + (stats.avoidant * 1.5) + (stats.ei * 0.5) },
+        { id: 'overthinking-analyzer', score: (stats.anxious * 1.2) + (stats.freeze * 1.2) + (stats.sa * 1.5) },
+        { id: 'numb-survivor', score: (stats.freeze * 1.8) + (stats.flight * 1.2) - stats.opt },
+        { id: 'adaptive-chameleon', score: (stats.fawn * 1.8) + (stats.darkTriad * 1.0) + (stats.growth * 0.5) },
+        { id: 'wounded-healer-dark', score: (stats.emp * 1.8) + (stats.resil * 1.2) + (stats.anxious * 0.5) },
+        { id: 'shadow-worker-dark', score: (stats.sa * 1.8) + (stats.darkTriad * 1.2) + (stats.growth * 1.0) },
+
+        // --- LIGHT ARCHETYPES (12) ---
+        { id: 'visionary-trailblazer', score: (stats.growth * 1.8) + (stats.opt * 1.5) + (stats.resil * 0.5) },
+        { id: 'empathic-connector', score: (stats.emp * 1.8) + (stats.secure * 1.5) + (stats.ei * 0.5) },
+        { id: 'resilient-phoenix', score: (stats.resil * 1.8) + (stats.growth * 1.2) + (stats.opt * 1.0) },
+        { id: 'wise-strategist', score: (stats.sa * 1.8) + (stats.bal * 1.2) + (stats.ei * 1.0) },
+        { id: 'balanced-harmonizer', score: (stats.bal * 1.8) + (stats.ei * 1.2) + (stats.secure * 1.0) },
+        { id: 'authentic-grounded', score: (stats.sa * 1.5) + (stats.secure * 1.5) + (stats.bal * 1.0) },
+        { id: 'joyful-catalyst', score: (stats.opt * 1.8) + (stats.ei * 1.2) + (stats.emp * 1.0) },
+        { id: 'quiet-powerhouse', score: (stats.growth * 1.5) + (stats.resil * 1.5) + (stats.sa * 1.0) },
+        { id: 'insightful-mentor', score: (stats.emp * 1.5) + (stats.sa * 1.5) + (stats.ei * 1.0) },
+        { id: 'adaptive-innovator', score: (stats.growth * 1.8) + (stats.bal * 1.2) + (stats.opt * 0.5) },
+        { id: 'radiant-nurturer', score: (stats.emp * 1.8) + (stats.bal * 1.2) + (stats.secure * 0.5) },
+        { id: 'evolving-sage', score: (stats.growth * 2.0) + (stats.sa * 1.5) - stats.darkTriad },
     ];
 
     // Filter candidates based on Path and Tier
